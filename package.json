@@ -4,7 +4,7 @@
   "description": "food selector",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "node server/app.js",
     "start:watch": "nodemon --watch server/app.js --watch server/modules --watch server/controllers --watch server/middlewares  server/app.js",
     "test": "mocha -r mock-local-storage --compilers js:babel-core/register,json:json-loader --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
