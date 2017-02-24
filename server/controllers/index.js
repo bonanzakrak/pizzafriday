@@ -5,6 +5,7 @@ const db = require('../modules/db')
 const orderParser = require('../modules/group')
 
 router.use('/auth', require('./auth'))
+router.use('/users', require('./users'))
 
 router.post('/restaurants/save',passport.authenticate('jwt', {session: false}), (req, res, next) => {
   db
@@ -13,7 +14,6 @@ router.post('/restaurants/save',passport.authenticate('jwt', {session: false}), 
     .then(res.json.bind(res))
     .catch(next)
 })
-
 
 router.post('/save', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   db

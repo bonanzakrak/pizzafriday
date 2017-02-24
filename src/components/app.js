@@ -15,7 +15,8 @@ import Login from './login'
 import auth from '../actions/auth'
 import Home from './home'
 import Orders from './orders'
-import Admin from './admin'
+
+import {Admin, AdminRestaurants} from './admin'
 import OrdersGrouped from './ordersGrouped'
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
@@ -66,7 +67,6 @@ class App extends Component {
       if (user.restaurants)
         this.props.updateRestaurant(user.restaurants, false)
 
-
       if (user.food && user.food.SELECT_MENU && filter(user.activeRestaurants.restaurants, {id: user.food.SELECT_MENU.restaurant}).length)
         this.props.selectRestaurant(filter(this.props.restaurants, {id: user.food.SELECT_MENU.restaurant})[0])
       else if (user.activeRestaurants.restaurants.length > 0)
@@ -95,12 +95,17 @@ class App extends Component {
       return (
         <div>Loading</div>
       )
-    else if (this.state.loggedIn)
+    else if (this.state.loggedIn){
+
       return (
         <div>
           <Router key={Math.random()} history={hashHistory}>
             <Route path='/orders' component={Orders} onEnter={auth.requireAuth}/>
+
             <Route path='/admin' component={Admin} onEnter={auth.requireAuth}/>
+            <Route path='/admin/restaurants' component={AdminRestaurants} onEnter={auth.requireAuth}/>
+            <Route path='/admin/users' component={Admin} onEnter={auth.requireAuth}/>
+
             <Route path='/group' component={OrdersGrouped} onEnter={auth.requireAuth}/>
             <Route path='*' component={Home} onEnter={auth.requireAuth} logout={this
               .logout
@@ -109,6 +114,7 @@ class App extends Component {
           <Notifications notifications={this.props.notifications}/>
         </div>
       )
+    }
     else
       return (
         <div>
@@ -120,7 +126,11 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {restaurants: state.restaurants, notifications: state.notifications, sel: getSelRestaurant(state,props)}
+  return {
+    restaurants: state.restaurants,
+    notifications: state.notifications,
+    sel: getSelRestaurant(state, props)
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

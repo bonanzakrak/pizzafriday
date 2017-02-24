@@ -5,12 +5,17 @@ const db = monk(config.db)
 
 const moment = require('moment')
 const lodash = require('lodash')
+
+var models = require('../models');
+
 module.exports = {
   db,
   upsertUser: (user, cb) => {
     //this is from passport - required CB
-    const collection = db.get('users')
-    collection.findOneAndUpdate({
+    //const collection = db.get('users')
+    
+    models
+      .User.findOneAndUpdate({
       id: user.id
     }, {
       $set: {
