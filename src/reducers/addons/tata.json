@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Frytki belgijskie + ketchup",
+    "restaurant": 4,"price": 990,
+    "items": ["Frytki belgijskie","ketchup"]
+  },
+  {
+    "name": "Frytki belgijskie + majonez",
+    "restaurant": 4,"price": 990,
+    "items": ["Frytki belgijskie","majonez"]
+  },
+  {
+    "name": "Frytki belgijskie + sos chilli mayo",
+    "restaurant": 4,"price": 990,
+    "items": ["Frytki belgijskie","sos chilli mayo"]
+  },
+  {
+    "name": "Frytki belgijskie + sos jogurtowo-czosnkowy",
+    "restaurant": 4,"price": 990,
+    "items": ["Frytki belgijskie","sos jogurtowo-czosnkowy"]
+  },
+  {
+    "name": "Frytki belgijskie + sos bbq",
+    "restaurant": 4,"price": 990,
+    "items": ["Frytki belgijskie","sos bbq"]
+  },
+
+  {
+    "name": "ketchup (do boxa)",
+    "restaurant": 4,"price": 990,
+    "items": ["ketchup"]
+  },
+  {
+    "name": "majonez (do boxa)",
+    "restaurant": 4,"price": 990,
+    "items": ["majonez"]
+  },
+  {
+    "name": "sos chilli mayo (do boxa)",
+    "restaurant": 4,"price": 990,
+    "items": ["sos chilli mayo"]
+  },
+  {
+    "name": "sos jogurtowo-czosnkowy (do boxa)",
+    "restaurant": 4,"price": 990,
+    "items": ["sos jogurtowo-czosnkowy"]
+  },
+  {
+    "name": "sos bbq (do boxa)",
+    "restaurant": 4,"price": 990,
+    "items": ["sos bbq"]
+  }
+]

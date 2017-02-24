@@ -1,0 +1,20 @@
+body .nav-tabs.nav-justified  li a{
+  border-radius: 10px 10px 0 0;
+  cursor:pointer;
+}
+
+body .panel.panel-restaurants{border-top:0;}
+
+body label, body .radio label{
+font-size:16px;
+}
+
+body .panel-profile .btn {
+    margin-top: 5px;
+}
+
+
+@media print {
+.navbar{display:none}
+.rounded{display:none}
+}

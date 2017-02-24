@@ -1,0 +1,298 @@
+[{
+    "name": "Sałatki 1. Caprese",
+    "restaurant": 3,
+    "price": 1600
+}, {
+    "name": "Sałatki 2. Insalata di pollo",
+    "altName": "Sałatka z kurczakiem",
+    "restaurant": 3,
+    "price": 2300
+}, {
+    "name": "Sałatki 3. Insalata di tonno",
+    "altName": "Sałatka z tuńczykiem",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Sałatki 4. Insalata di corciofi",
+    "altName": "Sałatka z karczochami",
+    "restaurant": 3,
+    "price": 2400
+}, {
+    "name": "Sałatki 5. Insalata di fromaggio di capra",
+    "altName": "Sałatka serowa",
+    "restaurant": 3,
+    "price": 2450
+}, {
+    "name": "Sałatki 6. Primavera",
+    "altName": "Sałatka wiosenna",
+    "restaurant": 3,
+    "price": 2600
+}, {
+    "name": "Risotto 1. Risotto con funghi di bosco",
+    "altName": "Risotto z borowikami w sosie z białego wina",
+    "restaurant": 3,
+    "price": 2400
+}, {
+    "name": "Risotto 2. Risotto con gamberetti",
+    "altName": "Risotto z krewetkami w pikantnym sosie pomidorowo śmietanowym z natką pietruszki",
+    "restaurant": 3,
+    "price": 2500
+}, {
+    "name": "Makarony 1. Spaghetti agilo, olio e peperoncino",
+    "altName": "Spaghetti z oliwą, czosnkiem, papryczką chili",
+    "restaurant": 3,
+    "price": 1590
+}, {
+    "name": "Makarony 2. Penne con pancetta e pomodoro",
+    "altName": "Makaron rurki z boczkiem w sosie pomidorowym z czosnkiem, papryczką chili i serem Grana Padano",
+    "restaurant": 3,
+    "price": 1900
+}, {
+    "name": "Makarony 3. Spaghetti alla bolognese",
+    "altName": "Spaghetti z sosem bolońskim z serem Grana Padano",
+    "restaurant": 3,
+    "price": 1950
+}, {
+    "name": "Makarony 4. Spaghetti alla carbonara",
+    "altName": "Spaghetti w sosie z jaj i śmietany z serem Grana Padano, boczkiem i pieprzem",
+    "restaurant": 3,
+    "price": 2100
+}, {
+    "name": "Makarony 5. Cannelloni con ricotta e spinaci",
+    "altName": "Makaron rurki nadziewany serem ricotta i szpinakiem, zapiekany w sosie beszamelowo-pomidorowym z serem Grana Padano",
+    "restaurant": 3,
+    "price": 2200
+}, {
+    "name": "Makarony 6. Penne con pollo e funghi",
+    "altName": "Makaron rurki w sosie śmietanowym z kurczakiem i podgrzybkami z natką pietruszki",
+    "restaurant": 3,
+    "price": 2250
+}, {
+    "name": "Makarony 7. Cannelloni con salmone",
+    "altName": "Makaron nadziewany farszem z sera ricotta i wędzonego łososia, zapiekany w sosie beszamelowo-pomidorowym z dodatkim papryki i sera Grana Padano",
+    "restaurant": 3,
+    "price": 2250
+}, {
+    "name": "Makarony 8. Tagliolini alla campagnola",
+    "altName": "Makaron wstążki z pomidorami koktajlowymi, serem mozzarella, czosnkiem, świeżą bazylią i oliwą",
+    "restaurant": 3,
+    "price": 2300
+}, {
+    "name": "Makarony 9. Lasagne al rogu",
+    "altName": "Lazania mięsna z pieca podawana z sosem ze świeżych pomidorów, zapiekana z serem Grana Padano",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Makarony 10. Tagiatelle primavera",
+    "altName": "Makaron wstążki w sosie śmietanoym z bobem, szparagami, gorszkiem cukrowym i serem Grana Padano",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Makarony 11. Pappardelle con funghi porcini",
+    "altName": "Makaron szeroka wstążka z borowikami w sosie naturalnym lub śmietanowym z natką pietruszki i serem Grana Padano",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Makarony 12. Tagliatelle con pollo e pere",
+    "altName": "Makaron wstążki w sosie curry, z kurczakiem, gruszką i migdałami",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Makarony 13. Gnocchi di formaggio di capra",
+    "altName": "Gnocchi nadziewane kozim serem i mastą z trufli, podane z rukolą, pomidorami koktajlowymi i serem Grana Padano",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Makarony 14. Tagliatelle al tartufo con champignon e pomodoro secco",
+    "altName": "Makaron wstążki z pastą z trufli, pieczarkami i syszonymi pomidorami z serem Grana Padano",
+    "restaurant": 3,
+    "price": 2500
+}, {
+    "name": "Makarony 15. Tagliatelle con carne di vitello e speck",
+    "altName": "Makaron wstążki w pikantnym sosie pomidorowo-paprykowym z cielęciną, z szynką speck i serem Grana Padano",
+    "restaurant": 3,
+    "price": 2500
+}, {
+    "name": "Makarony 16. Tagiatelle con salmone",
+    "altName": "Makaron wstążki z kawałkami łososia, groszkiem cukrowym i suszonymi pomidorami w sosiez serka mascarpone z natką pietruszki",
+    "restaurant": 3,
+    "price": 2550
+}, {
+    "name": "Makarony 17. Pappardelle con anatra",
+    "altName": "Makaron pappardelle z gogout z kaczki z porto, szałwią i orzeszkami piniowymi",
+    "restaurant": 3,
+    "price": 2850
+}, {
+    "name": "Makarony 18. Taliolini con gamberetti e spinaci",
+    "altName": "Makaron wstążki z krewetkami w białym winie, szpinakiem i czosnkiem",
+    "restaurant": 3,
+    "price": 2850
+}, {
+    "name": "Makarony 19. Pappardelle con manzo e pomodoro",
+    "altName": "Makaron szeroka wstążka z kawałkami polędwicy w sosie śmietanowo pomidorowym z czosnkiem, papryczką chili i tymiankiem",
+    "restaurant": 3,
+    "price": 2950
+}, {
+    "name": "Makarony 20. Spaghetti al nero di sepia ai frutti di mare",
+    "altName": "Czarne spaghetti z małżami, kalmarami i krewetkami z sosem z białego wina, z czosnkiem i papryczką chili",
+    "restaurant": 3,
+    "price": 2900
+}, {
+    "name": "Mięsa 1. Petto di pollo",
+    "altName": "Duszona pierś z kurczaka w sosie śmietanowym z borowikami",
+    "restaurant": 3,
+    "price": 2950
+}, {
+    "name": "Mięsa 2. Filetto di maiale",
+    "altName": "Pieczona polędwiczka wieprzowa z szynką speck",
+    "restaurant": 3,
+    "price": 3100
+}, {
+    "name": "Mięsa 3. Saltimbocca",
+    "altName": "Kotleciki cielęce duszone w białym winie",
+    "restaurant": 3,
+    "price": 3900
+}, {
+    "name": "Mięsa 4. Petto d'anatra arrosto in salsa di miele e arance",
+    "altName": "Pieczona pierś kaczki w sosie miodowo-pomarańczowym",
+    "restaurant": 3,
+    "price": 4200
+}, {
+    "name": "Mięsa 5. Filetto di manzo alla griglia",
+    "altName": "Polędwica wołowa z grila z sosem borowikowym",
+    "restaurant": 3,
+    "price": 4900
+}, {
+    "name": "Ryby i owoce morza 1. Cozze stufate in sugo di pomodoro",
+    "altName": "Małże duszone w pomidorach",
+    "restaurant": 3,
+    "price": 2600
+}, {
+    "name": "Ryby i owoce morza 2. Cozze alla marinara",
+    "altName": "Małże duszone w sosie z białego wina",
+    "restaurant": 3,
+    "price": 2600
+}, {
+    "name": "Ryby i owoce morza 3. Salmone in salsa di vino bianco",
+    "altName": "Pieczony filet z łososia",
+    "restaurant": 3,
+    "price": 3300
+}, {
+    "name": "Ryby i owoce morza 4. Lucioperca con spaghetti nero",
+    "altName": "Duszony filet z sandacza",
+    "restaurant": 3,
+    "price": 3600
+}, {
+    "name": "Ryby i owoce morza 5. Brasoto di ftutti di mare",
+    "altName": "Gulasz z owoców morza",
+    "restaurant": 3,
+    "price": 4200
+}, {
+    "name": "Calzone 1. Calsone Farcito",
+    "restaurant": 3,
+    "price": 2400
+}, {
+    "name": "Calzone 2. Calzone dalla Casa",
+    "restaurant": 3,
+    "price": 2400
+}, {
+    "name": "Pizza 1. Margeritta",
+    "restaurant": 3,
+    "price": 1700
+}, {
+    "name": "Pizza 2. Funghi",
+    "restaurant": 3,
+    "price": 1850
+}, {
+    "name": "Pizza 3. Cotto",
+    "restaurant": 3,
+    "price": 1950
+}, {
+    "name": "Pizza 4. Valentina",
+    "restaurant": 3,
+    "price": 2050
+}, {
+    "name": "Pizza 5. Capricciosa",
+    "restaurant": 3,
+    "price": 2250
+}, {
+    "name": "Pizza 6. Salame",
+    "restaurant": 3,
+    "price": 2250
+}, {
+    "name": "Pizza 7. Calabrese",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Pizza 8. Diavola",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Pizza 9. Spinaci",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Pizza 10. Vegetariana",
+    "restaurant": 3,
+    "price": 2350
+}, {
+    "name": "Pizza 11. Bormio",
+    "restaurant": 3,
+    "price": 2450
+}, {
+    "name": "Pizza 12. Mamma Margeritta",
+    "restaurant": 3,
+    "price": 2500
+}, {
+    "name": "Pizza 13. Porcini",
+    "restaurant": 3,
+    "price": 2550
+}, {
+    "name": "Pizza 14. Spinaci a Capra",
+    "restaurant": 3,
+    "price": 2550
+}, {
+    "name": "Pizza 15. Caprese",
+    "restaurant": 3,
+    "price": 2550
+}, {
+    "name": "Pizza 16. Salame piccante",
+    "restaurant": 3,
+    "price": 2600
+}, {
+    "name": "Pizza 17. Napoli",
+    "restaurant": 3,
+    "price": 2650
+}, {
+    "name": "Pizza 18. Speck",
+    "restaurant": 3,
+    "price": 2650
+}, {
+    "name": "Pizza 19. Quattro fromaggi",
+    "restaurant": 3,
+    "price": 2650
+}, {
+    "name": "Pizza 20. Parma",
+    "restaurant": 3,
+    "price": 2750
+}, {
+    "name": "Pizza 21. Siciliana",
+    "restaurant": 3,
+    "price": 2750
+}, {
+    "name": "Pizza 22. Gamberetti",
+    "restaurant": 3,
+    "price": 2850
+}, {
+    "name": "Pizza 23. Quattro stagioni",
+    "restaurant": 3,
+    "price": 2750
+}, {
+    "name": "Pizza 24. Salmone",
+    "restaurant": 3,
+    "price": 2750
+}, {
+    "name": "Pizza 25. Fantasia",
+    "restaurant": 3,
+    "price": 3100
+}]
