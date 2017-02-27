@@ -21,6 +21,7 @@ import OrdersGrouped from './ordersGrouped'
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
 import {getSelRestaurant} from '../selectors'
+import Notify from '../containers/notifications'
 import {
   selectMenu,
   selectAddon,
@@ -30,7 +31,7 @@ import {
   updateRestaurant
 } from '../actions/index'
 import filter from 'lodash.filter'
-import Notifications from 'react-notification-system-redux'
+
 
 class App extends Component {
   constructor(props) {
@@ -110,7 +111,7 @@ class App extends Component {
               .logout
               .bind(this)}/>
           </Router>
-
+          <Notify />
         </div>
       )
     }
@@ -126,7 +127,7 @@ class App extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-   // notifications: state.notifications
+
   }
 }
 
