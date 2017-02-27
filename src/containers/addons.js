@@ -2,14 +2,30 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {selectAddon} from '../actions/index'
-import { getSelRestaurant, getAddons } from '../selectors'
+import {getSelRestaurant} from '../selectors'
+import cookie from 'react-cookie'
 class Addons extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true,
+      addons: []
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id != this.props.selectedRestaurant._id)) {
+      this.setState({loading: true})
+      this.getAddon(nextProps.selectedRestaurant._id)
+    }
+  }
+
   renderList() {
-    if (this.props.addons.length === 0)
+    if (this.state.addons.length === 0)
       return <span>Brak dodatków w tej restauracji</span>
     else
       return this
-        .props
+        .state
         .addons
         .map((menuItem) => {
           let checked = false
@@ -29,6 +45,18 @@ class Addons extends Component {
   render() {
     if (!this.props.selectedRestaurant)
       return null
+    else if (this.state.loading)
+      return (
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <div className="panel-title pull-left">Dodatki</div>
+            <div className="clearfix"></div>
+          </div>
+          <div className="panel-body text-center">
+            <img src="/images/hourglass.svg"/>
+          </div>
+        </div>
+      )
     else
       return (
         <div className="panel panel-default">
@@ -41,10 +69,30 @@ class Addons extends Component {
         </div>
       )
   }
+
+  getAddon(restaurant) {
+    fetch('/addon/' + restaurant, {
+      credentials: "same-origin",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `JWT ${cookie.load('jwt')}`
+      }
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then((json) => {
+      this.setState({addons: json, loading: false})
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation: ' + error.message)
+    })
+  }
 }
 
 const mapStateToProps = (state) => {
-  return {selectedRestaurant: getSelRestaurant(state), addons: getAddons(state), selectedAddon: state.selectedAddon, availableRestaurants: state.availableRestaurants}
+  return {selectedRestaurant: getSelRestaurant(state), selectedAddon: state.selectedAddon, availableRestaurants: state.availableRestaurants}
 }
 
 const mapDispatchToProps = (dispatch) => {

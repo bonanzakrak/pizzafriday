@@ -3,7 +3,7 @@ const config = require('../config')
 const passport = require('passport')
 const OAuth2Strategy = require('passport-oauth2')
 const request = require('request')
-const db = require('./db');
+const db = require('./db')
 
 passport.serializeUser(db.upsertUser)
 

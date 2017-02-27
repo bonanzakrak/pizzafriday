@@ -22,26 +22,6 @@ export const getSelRestaurant = createSelector([
     else
       retValue = availableRestaurants[0]
   }
-  /// selectRestaurant(retValue)
+
   return retValue
-})
-
-const getFullMenu = (state) => state.fullMenu
-
-export const getMenu = createSelector([
-  getSelRestaurant, getFullMenu
-], (selectedRestaurant, fullMenu) => {
-  if (!selectedRestaurant)
-    return null
-  return _filter(fullMenu, {restaurant: selectedRestaurant.id})
-})
-
-const getFullAddons = (state) => state.addons
-
-export const getAddons = createSelector([
-  getSelRestaurant, getFullAddons
-], (selectedRestaurant, fullAddons) => {
-  if (!selectedRestaurant)
-    return null
-  return _filter(fullAddons, {restaurant: selectedRestaurant.id})
 })

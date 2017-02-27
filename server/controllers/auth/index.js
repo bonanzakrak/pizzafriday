@@ -18,7 +18,7 @@ router.get('/session', passport.authenticate('jwt', {session: false}), (req, res
     .then(orderParser.activeRestaurantsSort.bind(null, $scope))
     .then(db.getRestaurants)
     .then(orderParser.bindRestaurants.bind(null, $scope))
-    .then(db.getUserOrders.bind(null, req.user.id, $scope))
+    .then(db.getUserOrders.bind(null, req.user._id, $scope))
     .then(orderParser.usersOrders.bind(null, $scope))
     .then(res.json.bind(res))
     .catch(next)

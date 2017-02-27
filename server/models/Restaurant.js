@@ -3,14 +3,12 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema({
   id: {
+    type: Number
+  },
+  title: {
     type: String
   },
-  name: {
+  website: {
     type: String
-  },
-  email: {
-    type: String
-  },
-  image_48: String,
-  image_72: String
+  }
 })

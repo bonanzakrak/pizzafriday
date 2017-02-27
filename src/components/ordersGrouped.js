@@ -39,8 +39,9 @@ class OrdersGrouped extends Component {
       .props
       .groupedOrders
       .map((restaurantOrders) => {
+
         const restaurantName = filter(this.props.restaurants, {
-          id: parseInt(restaurantOrders.restaurant)
+          _id: restaurantOrders.restaurant
         })[0].title
         return (
           <table className="table table-striped" key={restaurantName}>
@@ -85,7 +86,7 @@ class OrdersGrouped extends Component {
   }
 
   getOrders() {
-    fetch('/grouped', {credentials: "same-origin"}).then((response) => {
+    fetch('/order/grouped', {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }

@@ -1,6 +1,7 @@
 import _filter from 'lodash.filter'
 import _remove from 'lodash.remove'
 import _unionBy from 'lodash.unionby'
+import _map from 'lodash.map'
 import cookie from 'react-cookie'
 
 export default function(state = [], action) {
@@ -25,13 +26,11 @@ export default function(state = [], action) {
   return state
 }
 
-
 const saveRestaurants = (action, cb) => {
- // console.log('debounced')
-  fetch('/saveActiveRestaurants', {
+  fetch('/restaurant/active', {
     credentials: "same-origin",
     method: 'POST',
-    body: JSON.stringify(action),
+    body: JSON.stringify(_map(action,'_id')),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

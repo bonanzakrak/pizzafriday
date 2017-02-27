@@ -17,7 +17,8 @@ class Menu extends Component {
         <div className="panel-body">Wybrane danie główne:<br/>
           <b>{this.props.selectedMenu.name}</b>
           {this.props.selectedMenu.altName && <i className="small text-muted"> / {this.props.selectedMenu.altName}</i>}
-          {filter(this.props.availableRestaurants, {id: this.props.selectedMenu.restaurant}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
+
+          {filter(this.props.availableRestaurants, {_id: this.props.selectedMenu.restaurant}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
         </div>
       )
     } else
@@ -30,7 +31,7 @@ class Menu extends Component {
         <div className="panel-body">Wybrany dodatek:<br/>
           <b>{this.props.selectedAddon.name}</b>
           {this.props.selectedAddon.altName && <i className="small text-muted"> / {this.props.selectedAddon.altName}</i>}
-          {filter(this.props.availableRestaurants, {id: this.props.selectedAddon.restaurant}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
+          {filter(this.props.availableRestaurants, {_id: this.props.selectedAddon.restaurant}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
           <br />
           <input type="button" className="btn btn-sm btn-danger" value="usuń dodatek" onClick={() => this.props.removeAddon()}/>
         </div>

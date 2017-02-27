@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'localhost:27017/pizzafriday',
+  db: 'mongodb://@127.0.0.1:27017/pizzaday',
   jwt: {
     secret: 'YOUR_SECRET'
   },

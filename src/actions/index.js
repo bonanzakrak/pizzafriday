@@ -28,7 +28,7 @@ const updateRestaurant = (restaurant, save = true) => {
   const action = {
     type: 'UPDATE_RESTAURANT',
     payload: restaurant,
-    apiEndpoint: '/restaurants/save'
+    apiEndpoint: '/restaurant'
   }
   if (!save)
     return action
@@ -36,7 +36,6 @@ const updateRestaurant = (restaurant, save = true) => {
     return function(dispatch, getState) {
       saveSelection(action, (restaurants) => {
         // get data from response (new id's)
-        console.log(restaurants)
         action.payload = restaurants
         dispatch(action)
         dispatch(getNotification('Zapisano restauracje'))
@@ -48,7 +47,7 @@ const selectMenu = (menu, save = true) => {
   const action = {
     type: 'SELECT_MENU',
     payload: menu,
-    apiEndpoint: '/save'
+    apiEndpoint: '/order'
   }
 
   return function(dispatch, getState) {
@@ -65,7 +64,7 @@ const selectAddon = (addon, save = true) => {
   const action = {
     type: 'SELECT_ADDON',
     payload: addon,
-    apiEndpoint: '/save'
+    apiEndpoint: '/order'
   }
   return function(dispatch, getState) {
     dispatch(action)
@@ -80,7 +79,7 @@ const selectAddon = (addon, save = true) => {
 const removeAddon = () => {
   const action = {
     type: 'REMOVE_ADDON',
-    apiEndpoint: '/save'
+    apiEndpoint: '/order'
   }
 
   return function(dispatch, getState) {
@@ -95,7 +94,7 @@ const addComment = (comment, save = true) => {
   const action = {
     type: 'ADD_COMMENT',
     payload: comment,
-    apiEndpoint: '/save'
+    apiEndpoint: '/order'
   }
 
   return function(dispatch, getState) {
@@ -190,7 +189,6 @@ const saveSelectionFull = (action, cb) => {
   }).then((response) => {
     cb(response)
   }).catch((error) => {
-    //console.log(error)
     console.log('There has been a problem with your fetch operation: ' + error.message)
   })
 }

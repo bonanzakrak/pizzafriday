@@ -4,12 +4,28 @@ import {bindActionCreators} from 'redux'
 import {selectMenu} from '../actions/index'
 import _sample from 'lodash.sample'
 import filter from 'lodash.filter'
-import { getSelRestaurant,getMenu } from '../selectors'
+import {getSelRestaurant} from '../selectors'
+import cookie from 'react-cookie'
 
 class Menu extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true,
+      menu: []
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id != this.props.selectedRestaurant._id)) {
+      this.setState({loading: true})
+      this.getMenu(nextProps.selectedRestaurant._id)
+    }
+  }
+
   renderList() {
     return this
-      .props
+      .state
       .menu
       .map((menuItem) => {
         let checked = false
@@ -37,6 +53,18 @@ class Menu extends Component {
   render() {
     if (!this.props.selectedRestaurant)
       return null
+    else if (this.state.loading)
+      return (
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <div className="panel-title pull-left">Danie główne</div>
+            <div className="clearfix"></div>
+          </div>
+          <div className="panel-body text-center">
+            <img src="/images/hourglass.svg" />
+          </div>
+        </div>
+      )
     else
       return (
         <div className="panel panel-default">
@@ -57,10 +85,31 @@ class Menu extends Component {
         </div>
       )
   }
+
+  getMenu(restaurant) {
+    fetch('/menu/' + restaurant, {
+      credentials: "same-origin",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `JWT ${cookie.load('jwt')}`
+      }
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then((json) => {
+      this.setState({menu: json, loading: false})
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation: ' + error.message)
+    })
+  }
+
 }
 
 const mapStateToProps = (state) => {
-  return {selectedRestaurant: getSelRestaurant(state), menu: getMenu(state), selectedMenu: state.selectedMenu, availableRestaurants: state.availableRestaurants}
+  return {selectedRestaurant: getSelRestaurant(state),  selectedMenu: state.selectedMenu}
 }
 
 const mapDispatchToProps = (dispatch) => {

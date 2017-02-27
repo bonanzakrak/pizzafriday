@@ -50,7 +50,6 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-      console.log(error)
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }

@@ -1,15 +1,20 @@
 
-var dbUrl = 'mongodb://@127.0.0.1:27017/food';
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+const config = require('../config')
+const mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 
-
-var models = require('../models');
+const models = require('../models')
 
 module.exports = function db (req, res, next) {
   req.db = {
-    User: models.User
-  };
-  return next();
+    User: models.User,
+    ActiveRestaurant: models.ActiveRestaurant,
+    Restaurant: models.Restaurant,
+    Menu: models.Menu,
+    Addon: models.Addon,
+    Order: models.Order
+  }
+  return next()
 }
-mongoose.connect(dbUrl);
+
+mongoose.connect(config.db)

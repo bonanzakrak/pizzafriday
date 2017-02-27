@@ -66,7 +66,7 @@ module.exports = {
           type: 2
         }
       })
-      .valueOf();
+      .valueOf()
   },
   concatMenu: (results) => {
     return []

@@ -9,6 +9,9 @@ import SelectedFood from '../containers/selectedFood'
 import Nav from './nav'
 
 class Home extends Component {
+  constructor(props){
+    super(props)
+  }
   render() {
     return (
       <div>

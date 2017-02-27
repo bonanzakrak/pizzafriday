@@ -44,8 +44,7 @@ class App extends Component {
   updateAuth(loggedIn, user) {
 
     this.setState({loggedIn, loaded: true})
-    if (user && user.user) {
-
+    if (user) {
       this
         .props
         .updateUser(user.user)
@@ -111,7 +110,7 @@ class App extends Component {
               .logout
               .bind(this)}/>
           </Router>
-          <Notifications notifications={this.props.notifications}/>
+
         </div>
       )
     }
@@ -127,9 +126,7 @@ class App extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-    restaurants: state.restaurants,
-    notifications: state.notifications,
-    sel: getSelRestaurant(state, props)
+   // notifications: state.notifications
   }
 }
 
