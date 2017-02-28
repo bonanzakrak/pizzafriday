@@ -19,3 +19,6 @@ Allow to select food from restaurants on pizza day.
 - levels of auth
 - users list for admin
 - change ```monk``` to something smarter
+
+
+[![Build Status](https://travis-ci.org/bonanzakrak/pizzafriday.svg?branch=master)](https://travis-ci.org/bonanzakrak/pizzafriday)
