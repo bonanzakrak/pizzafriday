@@ -1,30 +1,28 @@
-const mongo = require('mongodb')
-const monk = require('monk')
-const config = require('../config')
-const db = monk(config.db)
-
 const moment = require('moment')
 const lodash = require('lodash')
+
+const models = require('../models')
+
 module.exports = {
-  db,
   upsertUser: (user, cb) => {
     //this is from passport - required CB
-    const collection = db.get('users')
-    collection.findOneAndUpdate({
+    //const collection = db.get('users')
+
+    models
+      .User.findOneAndUpdate({
       id: user.id
     }, {
-      $set: {
+      $set:
         user
-      }
+
     }, {upsert: true}).then((result) => {
       cb(null, result._id)
     }).catch((error) => cb(error, null))
   },
   getUser: (payload, cb) => {
     //this is from passport - required CB
-    const collection = db.get('users')
-
-    collection
+    models
+      .User
       .find({id: payload.id})
       .then((result) => {
         if (result.length === 1)
@@ -35,19 +33,14 @@ module.exports = {
       .catch((error) => cb(error, null))
   },
   upsertOrder(user, action) {
-    const collection = db.get('orders')
-
-    let update = {
-      user: lodash.pick(user.user, 'image_48', 'id', 'name')
-    }
+    let update
 
     switch (action.type) {
       case('SELECT_MENU'):
         {
           update = {
             $set: {
-              menu: action.payload,
-              user: lodash.pick(user.user, 'image_48', 'id', 'name')
+              menu: action.payload
             }
           }
           break
@@ -56,8 +49,7 @@ module.exports = {
         {
           update = {
             $set: {
-              addon: action.payload,
-              user: lodash.pick(user.user, 'image_48', 'id', 'name')
+              addon: action.payload
             }
           }
           break
@@ -66,8 +58,7 @@ module.exports = {
         {
           update = {
             $set: {
-              comment: action.payload,
-              user: lodash.pick(user.user, 'image_48', 'id', 'name')
+              comment: action.payload
             }
           }
           break
@@ -83,51 +74,34 @@ module.exports = {
         }
     }
 
-    return collection.findOneAndUpdate({
-      userId: user.id,
+    return models.Order.findOneAndUpdate({
+      user: user,
       date: moment()
         .startOf('day')
         .toDate()
     }, update, {upsert: true})
   },
-  getUserOrders: (userId, scope) => {
+  getUserOrders: (user, scope) => {
     if (scope.authenticated) {
-      const collection = db.get('orders')
 
-      return collection.find({
-        userId: userId,
+      return models.Order.find({
+        user: user,
         date: moment()
           .startOf('day')
           .toDate()
-      })
+      }).populate('menu').populate('addon').populate('user')
     }
     return []
   },
   getOrders: () => {
-    const collection = db.get('orders')
-
-    return collection.find({
+    return models.Order.find({
       date: moment()
         .startOf('day')
         .toDate()
-    })
-  },
-  getUsersPastOrders: (userId) => {
-    const collection = db.get('orders')
-
-    return collection.find({
-      userId: userId,
-      date: {
-        $ne: moment()
-          .startOf('day')
-          .toDate()
-      }
-    })
+    }).populate('menu').populate('addon').populate('user')
   },
   setActiveRestaurants: (restaurants) => {
-    const collection = db.get('activeRestaurants')
-
-    return collection.findOneAndUpdate({
+    return models.ActiveRestaurant.findOneAndUpdate({
       id: 'active'
     }, {
       $set: {
@@ -136,15 +110,12 @@ module.exports = {
     }, {upsert: true})
   },
   getActiveRestaurants: () => {
-    const collection = db.get('activeRestaurants')
-
-    return collection.find({})
+    return models.ActiveRestaurant.find({}).populate('restaurants')
   },
   setRestaurant: (data) => {
     const restaurant = data.payload
-    const collection = db.get('restaurants')
 
-    return collection.findOneAndUpdate({
+    return models.Restaurant.findOneAndUpdate({
       id: restaurant.id
     }, {
       $set: {
@@ -154,8 +125,6 @@ module.exports = {
     }, {upsert: true})
   },
   getRestaurants: () => {
-    const collection = db.get('restaurants')
-
-    return collection.find({})
+    return models.Restaurant.find({})
   }
 }

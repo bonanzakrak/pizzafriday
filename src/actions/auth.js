@@ -1,9 +1,10 @@
 import React from 'react'
 import cookie from 'react-cookie'
+import api from './api'
 
 const _self = {
   login(cb) {
-    _self.request((res) => {
+    api.auth((res) => {
       if (res.authenticated) {
         if (cb)
           cb(true)
@@ -33,26 +34,6 @@ const _self = {
   logout(cb) {
     cookie.remove('jwt')
     cb()
-  },
-  request(cb) {
-    fetch('/auth/session', {
-      credentials: "same-origin",
-      headers: {
-        'Authorization': `JWT ${cookie.load('jwt')}`
-      }
-    }).then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else if (response.status === 401) {
-        return {authenticated: false}
-      }
-      throw new Error('Network response was not ok.')
-    }).then((response) => {
-      cb(response)
-    }).catch((error) => {
-      console.log(error)
-      console.log('There has been a problem with your fetch operation: ' + error.message)
-    })
   }
 }
 

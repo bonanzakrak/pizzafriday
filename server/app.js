@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const express = require('express')
 const passport = require('./modules/passport')
@@ -27,6 +27,7 @@ app.set('views', path.join(__dirname, '/views'))
 
 // middlewares
 app.use(require('./middlewares/error.js'))
+app.use(require('./middlewares/db.js'))
 
 // routing
 app.use('/',require('./controllers'))

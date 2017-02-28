@@ -8,6 +8,7 @@ class Restaurants extends Component {
   constructor(props){
     super(props)
   }
+
   renderList() {
     return this
       .props
@@ -18,7 +19,7 @@ class Restaurants extends Component {
 
         if (isDisabled)
           attributes.className = 'disabled'
-        else if (this.props.selectedRestaurant && restaurant.title === this.props.selectedRestaurant.title)
+        else if (this.props.reSelectedRestaurant && restaurant.title === this.props.reSelectedRestaurant.title)
           attributes.className = 'active'
 
         return (
@@ -38,8 +39,8 @@ class Restaurants extends Component {
         <div className="panel panel-default panel-restaurants">
           <div className="panel-body">
 
-            {this.props.selectedRestaurant &&
-              <a href={this.props.selectedRestaurant.website} target="_blank">Restaurant website</a>}
+            {this.props.reSelectedRestaurant &&
+              <a href={this.props.reSelectedRestaurant.website} target="_blank">Restaurant website</a>}
           </div>
         </div>
       </div>
@@ -48,7 +49,7 @@ class Restaurants extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {restaurants: state.restaurants, selectedRestaurant: getSelRestaurant(state), availableRestaurants: state.availableRestaurants}
+  return {restaurants: state.restaurants, reSelectedRestaurant: getSelRestaurant(state), availableRestaurants: state.availableRestaurants, selectRestaurant: state.selectRestaurant}
 }
 
 const mapDispatchToProps = (dispatch) => {

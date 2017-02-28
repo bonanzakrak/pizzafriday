@@ -22,7 +22,7 @@ class Orders extends Component {
   }
 
   getOrders() {
-    fetch('/orders', {credentials: "same-origin"}).then((response) => {
+    fetch('/order', {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }
@@ -52,24 +52,24 @@ class Orders extends Component {
       return sort
     })
 
-    return ordersSorted.map((order) => {
+    return this.props.orders.map((order) => {
       return (
         <tr key={order._id}>
           <td>
             <img src={order.user.image_48} className="rounded"/> {order.user.name}
           </td>
           <td>
-            {order.menu && <Warning warn={filter(this.props.availableRestaurants, {id: order.menu.restaurant}).length}>
+            {order.menu && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
               <i>
-                {filter(this.props.restaurants, {id: order.menu.restaurant})[0].title}
+                {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
               </i>
               <br/> {order.menu.name}
             </Warning>}
           </td>
           <td>
-            {order.addon && <Warning warn={filter(this.props.availableRestaurants, {id: order.addon.restaurant}).length}>
+            {order.addon && <Warning warn={filter(this.props.availableRestaurants, {_id: order.addon.restaurant}).length}>
               <i>
-                {filter(this.props.restaurants, {id: order.addon.restaurant})[0].title}
+                {filter(this.props.restaurants, {_id: order.addon.restaurant})[0].title}
               </i>
               <br/> {order.addon.name}
             </Warning>}

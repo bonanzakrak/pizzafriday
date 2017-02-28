@@ -15,11 +15,13 @@ import Login from './login'
 import auth from '../actions/auth'
 import Home from './home'
 import Orders from './orders'
-import Admin from './admin'
+
+import {Admin, AdminRestaurants} from './admin'
 import OrdersGrouped from './ordersGrouped'
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
 import {getSelRestaurant} from '../selectors'
+import Notify from '../containers/notifications'
 import {
   selectMenu,
   selectAddon,
@@ -29,7 +31,7 @@ import {
   updateRestaurant
 } from '../actions/index'
 import filter from 'lodash.filter'
-import Notifications from 'react-notification-system-redux'
+
 
 class App extends Component {
   constructor(props) {
@@ -43,8 +45,7 @@ class App extends Component {
   updateAuth(loggedIn, user) {
 
     this.setState({loggedIn, loaded: true})
-    if (user && user.user) {
-
+    if (user) {
       this
         .props
         .updateUser(user.user)
@@ -65,7 +66,6 @@ class App extends Component {
 
       if (user.restaurants)
         this.props.updateRestaurant(user.restaurants, false)
-
 
       if (user.food && user.food.SELECT_MENU && filter(user.activeRestaurants.restaurants, {id: user.food.SELECT_MENU.restaurant}).length)
         this.props.selectRestaurant(filter(this.props.restaurants, {id: user.food.SELECT_MENU.restaurant})[0])
@@ -95,20 +95,26 @@ class App extends Component {
       return (
         <div>Loading</div>
       )
-    else if (this.state.loggedIn)
+    else if (this.state.loggedIn){
+
       return (
         <div>
           <Router key={Math.random()} history={hashHistory}>
             <Route path='/orders' component={Orders} onEnter={auth.requireAuth}/>
+
             <Route path='/admin' component={Admin} onEnter={auth.requireAuth}/>
+            <Route path='/admin/restaurants' component={AdminRestaurants} onEnter={auth.requireAuth}/>
+            <Route path='/admin/users' component={Admin} onEnter={auth.requireAuth}/>
+
             <Route path='/group' component={OrdersGrouped} onEnter={auth.requireAuth}/>
             <Route path='*' component={Home} onEnter={auth.requireAuth} logout={this
               .logout
               .bind(this)}/>
           </Router>
-          <Notifications notifications={this.props.notifications}/>
+          <Notify />
         </div>
       )
+    }
     else
       return (
         <div>
@@ -120,7 +126,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {restaurants: state.restaurants, notifications: state.notifications, sel: getSelRestaurant(state,props)}
+  return {
+
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
