@@ -1,6 +1,6 @@
-export default function(state = null, action) {
+export default function(state = [], action) {
   switch (action.type) {
-    case('SELECT_MENU'):
+    case('SET_MENU'):
       return action.payload
   }
   return state

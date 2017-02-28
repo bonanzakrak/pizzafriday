@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {selectMenu} from '../actions/index'
+import {selectMenu, setMenu} from '../actions/index'
 import _sample from 'lodash.sample'
 import filter from 'lodash.filter'
 import {getSelRestaurant} from '../selectors'
@@ -11,10 +11,10 @@ class Menu extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
-      menu: []
+      loading: false
     }
   }
+
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id != this.props.selectedRestaurant._id)) {
@@ -25,7 +25,7 @@ class Menu extends Component {
 
   renderList() {
     return this
-      .state
+      .props
       .menu
       .map((menuItem) => {
         let checked = false
@@ -61,7 +61,7 @@ class Menu extends Component {
             <div className="clearfix"></div>
           </div>
           <div className="panel-body text-center">
-            <img src="/images/hourglass.svg" />
+            <img src="/images/hourglass.svg"/>
           </div>
         </div>
       )
@@ -100,7 +100,11 @@ class Menu extends Component {
       }
       throw new Error('Network response was not ok.')
     }).then((json) => {
-      this.setState({menu: json, loading: false})
+
+      this
+        .props
+        .setMenu(json)
+      this.setState({ loading: false})
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
@@ -109,12 +113,13 @@ class Menu extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {selectedRestaurant: getSelRestaurant(state),  selectedMenu: state.selectedMenu}
+  return {selectedRestaurant: getSelRestaurant(state), selectedMenu: state.selectedMenu, menu: state.menu}
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    selectMenu: selectMenu
+    selectMenu: selectMenu,
+    setMenu: setMenu
   }, dispatch)
 }
 

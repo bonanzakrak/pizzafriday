@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {selectAddon} from '../actions/index'
+import {selectAddon, setAddons} from '../actions/index'
 import {getSelRestaurant} from '../selectors'
 import cookie from 'react-cookie'
 class Addons extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
-      addons: []
+      loading: false
     }
   }
 
@@ -21,11 +20,11 @@ class Addons extends Component {
   }
 
   renderList() {
-    if (this.state.addons.length === 0)
+    if (this.props.addons.length === 0)
       return <span>Brak dodatków w tej restauracji</span>
     else
       return this
-        .state
+        .props
         .addons
         .map((menuItem) => {
           let checked = false
@@ -84,7 +83,10 @@ class Addons extends Component {
       }
       throw new Error('Network response was not ok.')
     }).then((json) => {
-      this.setState({addons: json, loading: false})
+      this
+        .props
+        .setAddons(json)
+      this.setState({ loading: false})
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
@@ -92,12 +94,13 @@ class Addons extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {selectedRestaurant: getSelRestaurant(state), selectedAddon: state.selectedAddon, availableRestaurants: state.availableRestaurants}
+  return {selectedRestaurant: getSelRestaurant(state), selectedAddon: state.selectedAddon, availableRestaurants: state.availableRestaurants, addons:state.addons}
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    selectAddon: selectAddon
+    selectAddon: selectAddon,
+    setAddons: setAddons
   }, dispatch)
 }
 

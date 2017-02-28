@@ -9,6 +9,9 @@ import AddedComment from './reducer_comment'
 import AvailableRestaurants from './reducer_available_restaurants'
 import GroupedOrdersReducer from './reducer_grouped_orders'
 import AllOrdersReducer from './reducer_all_orders'
+
+import MenuReducer from './reducer_menu'
+import AddonsReducer from './reducer_addon'
 import {reducer as notifications} from 'react-notification-system-redux'
 
 const rootReducer = combineReducers({
@@ -22,7 +25,9 @@ const rootReducer = combineReducers({
   comment: AddedComment,
   availableRestaurants: AvailableRestaurants,
   groupedOrders: GroupedOrdersReducer,
-  orders:AllOrdersReducer
+  orders:AllOrdersReducer,
+  menu:MenuReducer,
+  addons: AddonsReducer
 })
 
 export default rootReducer
