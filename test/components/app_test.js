@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 
 import Nav from '../../src/components/nav'
 import TestUtils from 'react-addons-test-utils'
-const fetchMock = require('fetch-mock');
+
 describe('App', () => {
   let component
   let token = null
