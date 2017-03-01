@@ -6,8 +6,6 @@ const models = require('../models')
 module.exports = {
   upsertUser: (user, cb) => {
     //this is from passport - required CB
-    //const collection = db.get('users')
-
     models
       .User.findOneAndUpdate({
       id: user.id
@@ -16,7 +14,8 @@ module.exports = {
         user
 
     }, {upsert: true}).then((result) => {
-      cb(null, result._id)
+      //console.log('upsertUser',result.id)
+      cb(null, result.id)
     }).catch((error) => cb(error, null))
   },
   getUser: (payload, cb) => {
@@ -25,6 +24,7 @@ module.exports = {
       .User
       .find({id: payload.id})
       .then((result) => {
+        //console.log('result', result)
         if (result.length === 1)
           cb(null, result[0])
         else

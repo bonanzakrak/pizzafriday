@@ -3,6 +3,7 @@ const router = express.Router()
 const passport = require('../../modules/passport')
 const db = require('../../modules/db')
 const orderParser = require('../../modules/group')
+const jwt = require('jsonwebtoken')
 
 router.use('/slack', require('./slack'))
 
@@ -22,6 +23,18 @@ router.get('/session', passport.authenticate('jwt', {session: false}), (req, res
     .then(orderParser.usersOrders.bind(null, $scope))
     .then(res.json.bind(res))
     .catch(next)
+})
+
+router.post('/user', (req, res) => {
+
+  db
+    .upsertUser(req.body, function(error, user) {
+      res.json(jwt.sign({
+        id: user
+      }, process.env.ENV_SECRET))
+    })
+
+  /**/
 })
 
 module.exports = router

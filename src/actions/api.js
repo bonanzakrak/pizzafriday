@@ -1,15 +1,15 @@
 import React from 'react'
-import cookie from 'react-cookie'
+import cookie from '../selectors/cookie'
 import debounce from 'lodash.debounce'
 let debouncers = {}
 
 const _self = {
 
   auth(cb) {
-    fetch('/auth/session', {
+    fetch('http://' + process.env.host + '/auth/session', {
       credentials: "same-origin",
       headers: {
-        'Authorization': `JWT ${cookie.load('jwt')}`
+        'Authorization': `JWT ${cookie.load('JWT')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -21,18 +21,18 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message)
+      console.log('There has been a problem with your fetch operation0: ' + error.message)
     })
   },
   saveRestaurants(action, cb) {
-    fetch('/restaurant/active', {
+    fetch('http://' + process.env.host + '/restaurant/active', {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(_map(action, '_id')),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('jwt')}`
+        'Authorization': `JWT ${cookie.load('JWT')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -42,7 +42,7 @@ const _self = {
     }).then((response) => {
       //cb(response)
     }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message)
+      console.log('There has been a problem with your fetch operation1: ' + error.message)
     })
   },
   saveSelection(action, cb) {
@@ -61,14 +61,14 @@ const _self = {
     return debouncer
   },
   saveSelectionFull(action, cb) {
-    fetch(action.apiEndpoint, {
+    fetch('http://' + process.env.host + action.apiEndpoint, {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(action),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('jwt')}`
+        'Authorization': `JWT ${cookie.load('JWT')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -78,7 +78,7 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message)
+      console.log('There has been a problem with your fetch operation2: ' + error.message)
     })
   }
 

@@ -26,7 +26,7 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 let opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeader()
-opts.secretOrKey = config.jwt.secret
+opts.secretOrKey = process.env.ENV_SECRET || config.jwt.secret
 
 passport.use(new JwtStrategy(opts, db.getUser))
 

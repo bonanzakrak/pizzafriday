@@ -33,6 +33,10 @@ app.use(require('./middlewares/db.js'))
 app.use('/',require('./controllers'))
 
 // lift server
-app.listen(1337, () => {
-  console.log('Server is running on http://localhost:1337 or http://127.0.0.1:1337')
+const port = process.env.PORT || 1337
+app.listen(port, () => {
+  console.log('Server is running on http://localhost:'+port+' or http://127.0.0.1:'+port)
 })
+
+
+module.exports = app;

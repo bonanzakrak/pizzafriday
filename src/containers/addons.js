@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {selectAddon, setAddons} from '../actions/index'
 import {getSelRestaurant} from '../selectors'
-import cookie from 'react-cookie'
+import cookie from '../selectors/cookie'
 class Addons extends Component {
   constructor(props) {
     super(props)
@@ -43,7 +43,7 @@ class Addons extends Component {
 
   render() {
     if (!this.props.selectedRestaurant)
-      return null
+      return (<div></div>)
     else if (this.state.loading)
       return (
         <div className="panel panel-default">
@@ -70,12 +70,12 @@ class Addons extends Component {
   }
 
   getAddon(restaurant) {
-    fetch('/addon/' + restaurant, {
+    fetch('http://' + process.env.host + '/addon/' + restaurant, {
       credentials: "same-origin",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('jwt')}`
+        'Authorization': `JWT ${cookie.load('JWT')}`
       }
     }).then((response) => {
       if (response.ok) {

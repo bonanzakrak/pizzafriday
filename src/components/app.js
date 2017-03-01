@@ -20,7 +20,7 @@ import {Admin, AdminRestaurants} from './admin'
 import OrdersGrouped from './ordersGrouped'
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
-import {getSelRestaurant} from '../selectors'
+
 import Notify from '../containers/notifications'
 import {
   selectMenu,
@@ -30,21 +30,24 @@ import {
   selectRestaurant,
   updateRestaurant
 } from '../actions/index'
+import cookie from '../selectors/cookie'
 import filter from 'lodash.filter'
 
+import store from '../store'
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       loggedIn: false,
       loaded: false
     }
   }
 
-  updateAuth(loggedIn, user) {
+  updateAuth(logged, user) {
+    this.setState({loaded: true,loggedIn: logged})
 
-    this.setState({loggedIn, loaded: true})
     if (user) {
       this
         .props
@@ -74,7 +77,6 @@ class App extends Component {
 
       if (user.activeRestaurants)
         this.props.setAvailableRestaurants(user.activeRestaurants.restaurants, false)
-
     }
   }
 
@@ -86,28 +88,27 @@ class App extends Component {
     auth.onChange = this
       .updateAuth
       .bind(this)
+
     auth.login()
   }
 
   render() {
-
     if (!this.state.loaded)
       return (
         <div>Loading</div>
       )
     else if (this.state.loggedIn){
-
       return (
         <div>
-          <Router key={Math.random()} history={hashHistory}>
-            <Route path='/orders' component={Orders} onEnter={auth.requireAuth}/>
+          <Router key={Math.random()} history={hashHistory} >
+            <Route path='/orders' component={Orders}/>
 
-            <Route path='/admin' component={Admin} onEnter={auth.requireAuth}/>
-            <Route path='/admin/restaurants' component={AdminRestaurants} onEnter={auth.requireAuth}/>
-            <Route path='/admin/users' component={Admin} onEnter={auth.requireAuth}/>
+            <Route path='/admin' component={Admin}/>
+            <Route path='/admin/restaurants' component={AdminRestaurants}/>
+            <Route path='/admin/users' component={Admin}/>
 
-            <Route path='/group' component={OrdersGrouped} onEnter={auth.requireAuth}/>
-            <Route path='*' component={Home} onEnter={auth.requireAuth} logout={this
+            <Route path='/group' component={OrdersGrouped}/>
+            <Route path='*' component={Home} logout={this
               .logout
               .bind(this)}/>
           </Router>

@@ -1,5 +1,5 @@
 import React from 'react'
-import cookie from 'react-cookie'
+import cookie from '../selectors/cookie'
 import api from './api'
 
 const _self = {
@@ -7,7 +7,7 @@ const _self = {
     api.auth((res) => {
       if (res.authenticated) {
         if (cb)
-          cb(true)
+          cb(true,res)
         this.onChange(true, res)
       } else {
         cookie.remove('jwt')
@@ -19,7 +19,7 @@ const _self = {
     return
   },
   loggedIn() {
-    return !!cookie.load('jwt')
+    return !!cookie.load('JWT')
   },
   requireAuth(nextState, replace) {
     if (!_self.loggedIn()) {

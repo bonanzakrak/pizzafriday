@@ -5,13 +5,14 @@ import {selectMenu, setMenu} from '../actions/index'
 import _sample from 'lodash.sample'
 import filter from 'lodash.filter'
 import {getSelRestaurant} from '../selectors'
-import cookie from 'react-cookie'
+import cookie from '../selectors/cookie'
 
 class Menu extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
+      jwt: props.jwt || cookie.load('JWT')
     }
   }
 
@@ -51,9 +52,10 @@ class Menu extends Component {
   }
 
   render() {
+
     if (!this.props.selectedRestaurant)
-      return null
-    else if (this.state.loading)
+      return (<div></div>)
+    else if (!this.props.selectedRestaurant || this.state.loading)
       return (
         <div className="panel panel-default">
           <div className="panel-heading">
@@ -87,14 +89,16 @@ class Menu extends Component {
   }
 
   getMenu(restaurant) {
-    fetch('/menu/' + restaurant, {
+
+    fetch('http://' + process.env.host + '/menu/' + restaurant, {
       credentials: "same-origin",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('jwt')}`
+        'Authorization': `JWT ${this.state.jwt}`
       }
     }).then((response) => {
+      //console.log(response)
       if (response.ok) {
         return response.json()
       }
@@ -106,6 +110,7 @@ class Menu extends Component {
         .setMenu(json)
       this.setState({ loading: false})
     }).catch((error) => {
+      console.log(error)
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }

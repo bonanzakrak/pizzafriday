@@ -1,6 +1,5 @@
 
 import Notifications from 'react-notification-system-redux'
-import cookie from 'react-cookie'
 import api from './api'
 
 

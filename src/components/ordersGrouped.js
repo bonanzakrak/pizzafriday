@@ -86,7 +86,7 @@ class OrdersGrouped extends Component {
   }
 
   getOrders() {
-    fetch('/order/grouped', {credentials: "same-origin"}).then((response) => {
+    fetch('http://' + process.env.host + '/order/grouped', {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }

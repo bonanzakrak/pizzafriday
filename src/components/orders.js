@@ -22,7 +22,7 @@ class Orders extends Component {
   }
 
   getOrders() {
-    fetch('/order', {credentials: "same-origin"}).then((response) => {
+    fetch('http://' + process.env.host + '/order', {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }

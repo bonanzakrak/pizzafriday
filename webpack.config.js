@@ -23,7 +23,14 @@ module.exports = {
       }
     ]
   },
-  plugins: [new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)],
+  plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
+    new webpack.DefinePlugin({
+      "process.env": {
+        host: JSON.stringify(process.env.HOST || '192.168.1.12')
+      }
+    })
+  ],
   resolve: {
     extensions: ['.js', '.jsx']
   },
