@@ -1,11 +1,5 @@
 import React, {Component} from 'react'
-import {renderComponent, expect, getToken, server, sinon} from '../test_helper'
-
 import ConnectedApp, {App} from '../../src/components/app'
-import {Provider} from 'react-redux';
-
-import Nav from '../../src/components/nav'
-import TestUtils from 'react-addons-test-utils'
 
 describe('App', () => {
   let component
@@ -14,13 +8,12 @@ describe('App', () => {
   before(function(done) {
     server
       .listen(1338, function() {
-        getToken(function(error, serverToken) {
-          //token = serverToken
+        getToken().then(function(serverToken) {
           // global.document.cookie = "JWT=" + res.body
           done()
-        })
+        }).catch(function(error){})
       })
-  });
+  })
 
   describe('not logged', () => {
     let componentDidMount
@@ -41,20 +34,4 @@ describe('App', () => {
     })
   })
 
-
- /* describe('logged', () => {
-
-    beforeEach(() => {
-      component = renderComponent(App, {jwt: token})
-    })
-
-    it('should display loading', () => {
-      expect(component).to.exist
-
-    })
-
-  })*/
-  after(function() {
-    //server.close();
-  })
 })

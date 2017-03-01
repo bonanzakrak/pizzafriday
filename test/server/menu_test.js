@@ -1,35 +1,24 @@
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let should = chai.should();
+let chai = require('chai')
+let chaiHttp = require('chai-http')
+let should = chai.should()
 
-var server = require('../../server/app');
+import setup from '../setup'
 
-chai.use(chaiHttp);
+chai.use(chaiHttp)
 
-describe('Menu routing', function() {
-
-  let token = null;
-
+describe('Get menu data from API', function() {
+  let token = null
+  let menu = []
   before(function(done) {
-    let user = {
-      "id": "TESTUSER",
-      "image_72": "https://avatars.slack-edge.com/2016-01-20/18939109478_93f9999bc9919b5aa816_72.jpg",
-      "image_48": "https://avatars.slack-edge.com/2016-01-20/18939109478_93f9999bc9919b5aa816_48.jpg",
-      "email": "test@webspirit.ie",
-      "name": "Test Test"
-    }
-
-    chai
-      .request(server)
-      .post('/auth/user')
-      .send(user)
-      .end(function(err, res) {
-        token = res.body;
-        done();
-      });
+    getToken()
+      .then(function(res) {
+        token = res.body
+        done()
+      })
+      .catch(function(error) {})
   });
 
-  it('Should block request without authentication', function(done) {
+  it('Should block request without JWT', function(done) {
     chai
       .request(server)
       .get('/menu')
@@ -41,26 +30,140 @@ describe('Menu routing', function() {
 
         done()
       })
-  });
+  })
 
-  it('Should allow to get menu with authentication', function(done) {
+  it('Should block request with invalid JWT', function(done) {
     chai
       .request(server)
       .get('/menu')
-      .set('Authorization', 'JWT ' + token)
+      .set('Authorization', 'JWT invalidToken')
       .end((err, res) => {
         res
           .should
           .have
-          .status(200)
-
-        res
-          .body
-          .should
-          .be
-          .a('array')
+          .status(401)
 
         done()
       })
-  });
-});
+  })
+
+  describe('Should allow to get menu with authentication', function() {
+    let menu = []
+    before(function(done) {
+      models
+        .Menu
+        .find({})
+        .then(function(data) {
+          menu = data
+          done()
+        })
+        .catch(function(error) {})
+
+    })
+
+    it('returning all elements', function(done) {
+      chai
+        .request(server)
+        .get('/menu')
+        .set('Authorization', 'JWT ' + token)
+        .end((err, res) => {
+          res
+            .should
+            .have
+            .status(200)
+
+          res
+            .body
+            .should
+            .be
+            .a('array')
+
+          res
+            .body
+            .should
+            .be
+            .lengthOf(menu.length)
+
+          done()
+        })
+    })
+
+    setup
+      .restaurants
+      .forEach(function(restaurant) {
+        it('returning menu for restaurant ' + restaurant.title, function(done) {
+          chai
+            .request(server)
+            .get('/menu/' + restaurant._id)
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+              res
+                .should
+                .have
+                .status(200)
+
+              res
+                .body
+                .should
+                .be
+                .a('array')
+
+              res
+                .body
+                .should
+                .be
+                .lengthOf(0)
+              done()
+            })
+        })
+      })
+
+    it('for non existing restaurant', function(done) {
+      chai
+        .request(server)
+        .get('/menu/' + mongoose.Types.ObjectId())
+        .set('Authorization', 'JWT ' + token)
+        .end((err, res) => {
+          res
+            .should
+            .have
+            .status(200)
+
+          res
+            .body
+            .should
+            .be
+            .a('array')
+
+          res
+            .body
+            .should
+            .be
+            .lengthOf(0)
+
+          done()
+        })
+    })
+
+    it('status 500 for invalid restaurant id', function(done) {
+      chai
+        .request(server)
+        .get('/menu/undefined')
+        .set('Authorization', 'JWT ' + token)
+        .end((err, res) => {
+          res
+            .should
+            .have
+            .status(500)
+
+          res
+            .text
+            .should
+            .have
+            .string('restaurant is not valid ObjectId')
+          done()
+        })
+    })
+
+  })
+})

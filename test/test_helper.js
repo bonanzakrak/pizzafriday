@@ -1,8 +1,8 @@
 process.env.host = '127.0.0.1:1338'
 process.env.PORT = '1337'
 process.env.ENV_SECRET = 'test_secret'
-process.env.NODE_ENV = "DEV"
-//import _$ from 'jquery';
+process.env.NODE_ENV = "TESTING"
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -16,17 +16,18 @@ const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 import {Provider} from 'react-redux';
 
-import enzyme, {mount, shallow} from 'enzyme'
+import enzyme, {shallow} from 'enzyme'
 import chaiEnzyme from 'chai-enzyme';
 
 import {createStore} from 'redux';
 import reducers from '../src/reducers';
 
+const mongoose = require("mongoose");
+const models = require('../server/models')
+
 require('isomorphic-fetch')
 
-global.document = jsdom.jsdom('<!doctype html><html><body></body></html>', {
-  url: 'http://localhost'
-});
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>', {url: 'http://localhost'});
 global.window = global.document.defaultView;
 global.navigator = global.window.navigator;
 
@@ -35,14 +36,7 @@ chai.use(chaiHttp)
 chai.use(sinonChai);
 
 function renderComponent(ComponentClass, props = {}, state = {}) {
-  const componentInstance = shallow(<ComponentClass {...props}/>)
-  /*
-  <Provider store={createStore(reducers, state)}>
-    <ComponentClass {...props}/>
-  </Provider>
-   */
-
-  return componentInstance
+  return shallow(<ComponentClass {...props}/>)
 }
 
 let user = {
@@ -53,15 +47,17 @@ let user = {
   "name": "Test Test"
 }
 
-function getToken(callback) {
-  chai
+function getToken() {
+  return chai
     .request(process.env.host)
     .post('/auth/user')
     .send(user)
-    .end(function(err, res) {
-     // global.document.cookie = "JWT=" + res.body
-      callback(err, res.body)
-    });
 }
 
-export {renderComponent, expect, getToken, server, sinon}
+global.renderComponent = renderComponent
+global.expect = expect
+global.getToken = getToken
+global.server = server
+global.sinon = sinon
+global.models = models
+global.mongoose = mongoose

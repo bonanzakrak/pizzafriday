@@ -7,6 +7,7 @@ const models = require('../models')
 
 module.exports = function db (req, res, next) {
   req.db = {
+    mongoose,
     User: models.User,
     ActiveRestaurant: models.ActiveRestaurant,
     Restaurant: models.Restaurant,

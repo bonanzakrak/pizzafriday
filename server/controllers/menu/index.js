@@ -13,13 +13,17 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 })
 
 router.get('/:restaurant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-  req
-    .db
-    .Menu
-    .find({restaurant:req.params.restaurant})
-    .exec()
-    .then(res.json.bind(res))
-    .catch(next)
-})
+  if (!req.db.mongoose.Types.ObjectId.isValid(req.params.restaurant))
+    next(new Error('restaurant is not valid ObjectId'))
+  else
+    req
+      .db
+      .Menu
+      .find({restaurant: req.params.restaurant})
+      .exec()
+      .then(res.json.bind(res))
+      .catch(next)
+  }
+)
 
 module.exports = router
