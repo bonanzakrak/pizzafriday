@@ -24,7 +24,7 @@ describe('Menu routing', function() {
       .post('/auth/user')
       .send(user)
       .end(function(err, res) {
-        token = res.body; // Or something
+        token = res.body;
         done();
       });
   });
@@ -33,7 +33,6 @@ describe('Menu routing', function() {
     chai
       .request(server)
       .get('/menu')
-
       .end((err, res) => {
         res
           .should
