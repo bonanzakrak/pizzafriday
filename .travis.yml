@@ -2,3 +2,5 @@ language: node_js
 node_js:
   - "6"
 services: mongodb
+before_install:
+  - cp server/config.example.js server/config.js
