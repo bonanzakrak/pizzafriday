@@ -7,10 +7,10 @@ const _self = {
     api.auth((res) => {
       if (res.authenticated) {
         if (cb)
-          cb(true,res)
+          cb(true, res)
         this.onChange(true, res)
       } else {
-        cookie.remove('jwt')
+        cookie.remove('JWToken')
         if (cb)
           cb(false)
         this.onChange(false)
@@ -19,7 +19,7 @@ const _self = {
     return
   },
   loggedIn() {
-    return !!cookie.load('JWT')
+    return !!cookie.load('JWToken')
   },
   requireAuth(nextState, replace) {
     if (!_self.loggedIn()) {
@@ -32,7 +32,7 @@ const _self = {
     }
   },
   logout(cb) {
-    cookie.remove('jwt')
+    cookie.remove('JWToken')
     cb()
   }
 }

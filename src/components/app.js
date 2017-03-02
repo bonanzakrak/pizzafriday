@@ -46,18 +46,14 @@ export class App extends Component {
   }
 
   updateAuth(logged, user) {
-    this.setState({loaded: true,loggedIn: logged})
+    this.setState({loaded: true, loggedIn: logged})
 
     if (user) {
-      this
-        .props
-        .updateUser(user.user)
+      this.props.updateUser(user.user)
 
       if (user.food) {
         if (user.food.SELECT_MENU) {
-          this
-            .props
-            .selectMenu(user.food.SELECT_MENU, false)
+          this.props.selectMenu(user.food.SELECT_MENU, false)
         }
 
         if (user.food.SELECT_ADDON)
@@ -85,9 +81,7 @@ export class App extends Component {
   }
 
   componentWillMount() {
-    auth.onChange = this
-      .updateAuth
-      .bind(this)
+    auth.onChange = this.updateAuth.bind(this)
 
     auth.login()
   }
@@ -97,10 +91,10 @@ export class App extends Component {
       return (
         <div>Loading</div>
       )
-    else if (this.state.loggedIn){
+    else if (this.state.loggedIn) {
       return (
         <div>
-          <Router key={Math.random()} history={hashHistory} >
+          <Router key={Math.random()} history={hashHistory}>
             <Route path='/orders' component={Orders}/>
 
             <Route path='/admin' component={Admin}/>
@@ -108,15 +102,12 @@ export class App extends Component {
             <Route path='/admin/users' component={Admin}/>
 
             <Route path='/group' component={OrdersGrouped}/>
-            <Route path='*' component={Home} logout={this
-              .logout
-              .bind(this)}/>
+            <Route path='*' component={Home} logout={this.logout.bind(this)}/>
           </Router>
-          <Notify />
+          <Notify/>
         </div>
       )
-    }
-    else
+    } else
       return (
         <div>
           <Nav/>
@@ -127,9 +118,7 @@ export class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {
-
-  }
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {

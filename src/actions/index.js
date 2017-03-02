@@ -1,7 +1,5 @@
-
 import Notifications from 'react-notification-system-redux'
 import api from './api'
-
 
 const getNotification = (text) => {
   let notificationOpts = {
@@ -34,7 +32,7 @@ const updateRestaurant = (restaurant, save = true) => {
     return action
   else
     return function(dispatch, getState) {
-      api.saveSelection(action, (restaurants) => {
+      return api.saveSelection(action, (restaurants) => {
         // get data from response (new id's)
         action.payload = restaurants
         dispatch(action)
@@ -117,14 +115,6 @@ const setAvailableRestaurants = (restaurant, save = true, checked) => {
   return action
 }
 
-const setLogged = (logged) => {
-  const action = {
-    type: 'SET_LOGGED',
-    payload: logged
-  }
-  return action
-}
-
 const setGroupedOrders = (orders) => {
   const action = {
     type: 'GROUPED_ORDERS',
@@ -140,7 +130,6 @@ const setOrders = (orders) => {
   }
   return action
 }
-
 
 const setMenu = (menu) => {
   const action = {
@@ -159,6 +148,7 @@ const setAddons = (addons) => {
 }
 
 export {
+  getNotification,
   updateUser,
   selectRestaurant,
   selectMenu,
@@ -166,12 +156,9 @@ export {
   addComment,
   setAvailableRestaurants,
   removeAddon,
-  setLogged,
   updateRestaurant,
   setGroupedOrders,
   setOrders,
   setMenu,
   setAddons
 }
-
-

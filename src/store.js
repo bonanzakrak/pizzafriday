@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 
 const enhancer = compose(
   // Middleware you want to use in development:
-  applyMiddleware(debounceMiddleware,thunk),
+  applyMiddleware(thunk),//debounceMiddleware
   // Required! Enable Redux DevTools with the monitors you chose
   DevTools.instrument()
 )

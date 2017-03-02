@@ -1,6 +1,7 @@
 import React from 'react'
 import cookie from '../selectors/cookie'
 import debounce from 'lodash.debounce'
+import _map from 'lodash.map'
 let debouncers = {}
 
 const _self = {
@@ -9,7 +10,7 @@ const _self = {
     fetch('http://' + process.env.host + '/auth/session', {
       credentials: "same-origin",
       headers: {
-        'Authorization': `JWT ${cookie.load('JWT')}`
+        'Authorization': `JWT ${cookie.load('JWToken')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -32,7 +33,7 @@ const _self = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('JWT')}`
+        'Authorization': `JWT ${cookie.load('JWToken')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -46,7 +47,7 @@ const _self = {
     })
   },
   saveSelection(action, cb) {
-    const func = (action, cb) => _self.saveSelectionFull(action, cb)
+    const func = (action, cb) => {return _self.saveSelectionFull(action, cb)}
     return _self.getDebouncer(action.type, 1000, func)(action, cb)
   },
   getDebouncer(key, wait, func) {
@@ -58,17 +59,18 @@ const _self = {
       debouncer = debounce(func, wait)
       debouncers[key] = debouncer
     }
+
     return debouncer
   },
   saveSelectionFull(action, cb) {
-    fetch('http://' + process.env.host + action.apiEndpoint, {
+     return fetch('http://' + process.env.host + action.apiEndpoint, {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(action),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('JWT')}`
+        'Authorization': `JWT ${cookie.load('JWToken')}`
       }
     }).then((response) => {
       if (response.ok) {
@@ -79,9 +81,9 @@ const _self = {
       cb(response)
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation2: ' + error.message)
+      return error
     })
   }
-
 }
 
 module.exports = _self

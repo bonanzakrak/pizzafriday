@@ -11,11 +11,16 @@ let restaurants = [
 ]
 
 before(function(done) {
-  console.log('global setup');
 
-  cleanup().then(setupRestaurants(function() {
-    done()
-  })).catch(error => console.log(error))
+  getToken()
+    .then(function(serverToken) {
+      // global.document.cookie = "JWT=" + res.body
+      cleanup().then(setupRestaurants(function() {
+        done()
+      })).catch(error => console.log(error))
+    })
+    .catch(function(error) {})
+
 })
 
 const cleanup = () => {

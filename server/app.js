@@ -32,6 +32,7 @@ app.use(require('./middlewares/db.js'))
 // routing
 app.use('/',require('./controllers'))
 app.use(require('./middlewares/error.js'))
+
 // lift server
 const port = process.env.PORT || 1337
 app.listen(port, () => {

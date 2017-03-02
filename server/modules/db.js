@@ -7,16 +7,14 @@ module.exports = {
   upsertUser: (user, cb) => {
     //this is from passport - required CB
     models
-      .User.findOneAndUpdate({
-      id: user.id
-    }, {
-      $set:
-        user
-
-    }, {upsert: true}).then((result) => {
-      //console.log('upsertUser',result.id)
-      cb(null, result.id)
-    }).catch((error) => cb(error, null))
+      .User
+      .findOneAndUpdate({
+        id: user.id
+      }, user, {upsert: true})
+      .then((result) => {
+        cb(null, result.id)
+      })
+      .catch((error) => cb(error, null))
   },
   getUser: (payload, cb) => {
     //this is from passport - required CB
@@ -24,7 +22,6 @@ module.exports = {
       .User
       .find({id: payload.id})
       .then((result) => {
-        //console.log('result', result)
         if (result.length === 1)
           cb(null, result[0])
         else
@@ -74,57 +71,78 @@ module.exports = {
         }
     }
 
-    return models.Order.findOneAndUpdate({
-      user: user,
-      date: moment()
-        .startOf('day')
-        .toDate()
-    }, update, {upsert: true})
-  },
-  getUserOrders: (user, scope) => {
-    if (scope.authenticated) {
-
-      return models.Order.find({
+    return models
+      .Order
+      .findOneAndUpdate({
         user: user,
         date: moment()
           .startOf('day')
           .toDate()
-      }).populate('menu').populate('addon').populate('user')
+      }, update, {upsert: true})
+  },
+  getUserOrders: (user, scope) => {
+    if (scope.authenticated) {
+
+      return models
+        .Order
+        .find({
+          user: user,
+          date: moment()
+            .startOf('day')
+            .toDate()
+        })
+        .populate('menu')
+        .populate('addon')
+        .populate('user')
     }
     return []
   },
   getOrders: () => {
-    return models.Order.find({
-      date: moment()
-        .startOf('day')
-        .toDate()
-    }).populate('menu').populate('addon').populate('user')
+    return models
+      .Order
+      .find({
+        date: moment()
+          .startOf('day')
+          .toDate()
+      })
+      .populate('menu')
+      .populate('addon')
+      .populate('user')
   },
   setActiveRestaurants: (restaurants) => {
-    return models.ActiveRestaurant.findOneAndUpdate({
-      id: 'active'
-    }, {
-      $set: {
-        restaurants
-      }
-    }, {upsert: true})
+    return models
+      .ActiveRestaurant
+      .findOneAndUpdate({
+        id: 'active'
+      }, {
+        $set: {
+          restaurants
+        }
+      }, {upsert: true})
   },
   getActiveRestaurants: () => {
-    return models.ActiveRestaurant.find({}).populate('restaurants')
+    return models
+      .ActiveRestaurant
+      .find({})
+      .populate('restaurants')
   },
   setRestaurant: (data) => {
     const restaurant = data.payload
 
-    return models.Restaurant.findOneAndUpdate({
-      id: restaurant.id
-    }, {
-      $set: {
-        title: restaurant.title,
-        website: restaurant.website
-      }
-    }, {upsert: true})
+    return models
+      .Restaurant
+      .findOneAndUpdate({
+        id: restaurant.id
+      }, {
+        $set: {
+          title: restaurant.title,
+          website: restaurant.website
+        }
+      }, {upsert: true})
   },
   getRestaurants: () => {
-    return models.Restaurant.find({})
+    return models
+      .Restaurant
+      .find({})
   }
 }

@@ -12,7 +12,7 @@ class Menu extends Component {
     super(props)
     this.state = {
       loading: false,
-      jwt: props.jwt || cookie.load('JWT')
+      jwt: props.jwt || cookie.load('JWToken')
     }
   }
 

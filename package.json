@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node server/app.js",
     "start:watch": "nodemon --watch server/app.js --watch server/modules --watch server/controllers --watch server/middlewares  server/app.js",
-    "test": "mocha -r mock-local-storage --compilers js:babel-core/register,json:json-loader --require ./test/test_helper.js --recursive ./test test/setup.js",
-    "test:watch": "npm run test -- --watch"
+    "test": "mocha -r mock-local-storage --compilers js:babel-core/register,json:json-loader --require ./test/test_helper.js --recursive ./test test/setup.js --timeout 3000",
+    "test:watch": "npm run test -- --watch",
+    "coverage": "node_modules/.bin/nyc --require babel-core/register mocha test/setup.js test/**/*.js"
   },
   "author": "",
   "license": "ISC",
@@ -39,6 +40,7 @@
     "mocha": "^3.2.0",
     "mock-local-storage": "^1.0.2",
     "monk": "^4.0.0",
+    "nock": "^9.0.9",
     "object-assign": "^4.1.1",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",

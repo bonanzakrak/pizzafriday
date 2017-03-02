@@ -11,7 +11,7 @@ router.get('/', passport.authenticate('oauth2'))
 // slack auth callback
 router.get('/callback', passport.authenticate('oauth2', {failureRedirect: '/#/failed'}), (req, res) => {
   // Successful authentication, redirect home.
-  res.cookie('JWT', jwt.sign({
+  res.cookie('JWToken', jwt.sign({
     id: req.user.id
   }, config.jwt.secret))
   res.redirect('/#/order')

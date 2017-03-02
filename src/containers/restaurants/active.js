@@ -11,7 +11,7 @@ class ActiveRestaurants extends Component {
       .restaurants
       .map((restaurant) => {
 
-        const checked = filter(this.props.availableRestaurants, {id: restaurant.id}).length === 0
+        const checked = filter(this.props.availableRestaurants, {_id: restaurant._id}).length === 0
           ? false
           : true
 

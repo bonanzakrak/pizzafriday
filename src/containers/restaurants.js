@@ -15,7 +15,7 @@ class Restaurants extends Component {
       .restaurants
       .map((restaurant) => {
         let attributes = {}
-        const isDisabled = filter(this.props.availableRestaurants, {id: restaurant.id}).length === 0
+        const isDisabled = filter(this.props.availableRestaurants, {_id: restaurant._id}).length === 0
 
         if (isDisabled)
           attributes.className = 'disabled'

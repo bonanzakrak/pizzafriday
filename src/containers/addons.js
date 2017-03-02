@@ -75,7 +75,7 @@ class Addons extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${cookie.load('JWT')}`
+        'Authorization': `JWT ${cookie.load('JWToken')}`
       }
     }).then((response) => {
       if (response.ok) {
