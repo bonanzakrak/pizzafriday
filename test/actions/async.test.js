@@ -1,20 +1,21 @@
 import React from 'react'
 import nock from 'nock'
 
-import thunk from 'redux-thunk'
+
 import sinon from 'sinon'
+
 import * as actions from '../../src/actions'
 import * as types from '../../src/actions/types'
-import {applyMiddleware} from 'redux'
 
+import { notificationTest, simpleActionTest, mockStore } from './action.helpers'
 describe('Action creators - async', () => {
   let clock
-  before(function() {
+  before(function () {
     clock = sinon.useFakeTimers()
   })
 
-  after(function() {
-    clock.restore();
+  after(function () {
+    clock.restore()
   })
 
   afterEach(() => {
@@ -54,11 +55,17 @@ describe('Action creators - async', () => {
         }
       ]
 
+      const tests = [simpleActionTest, notificationTest]
+
       const save = true
 
-      nock('http://' + process.env.host).post(action.apiEndpoint).reply(200, {body: restaurant})
-      const myStore = mockStore({}, expectedActions, done)
-      myStore.dispatch(actions.updateRestaurant(restaurant, save)).then(() => {}).catch((e) => done(e))
+      nock('http://' + process.env.host)
+        .post(action.apiEndpoint)
+        .reply(200, { body: restaurant })
+      const myStore = mockStore({}, expectedActions, tests, done)
+      myStore.dispatch(actions.updateRestaurant(restaurant, save))
+        .then(() => {})
+        .catch((e) => done(e))
       // we need to wait for debouncer
       clock.tick(1200)
 
@@ -78,13 +85,13 @@ describe('Action creators - async', () => {
       }
 
       const save = false
-      expect(actions.updateRestaurant(restaurant, save)).to.deep.equal(action)
+      expect(actions.updateRestaurant(restaurant, save))
+        .to.deep.equal(action)
     })
   })
 
   describe('update menu action creator', () => {
     it('should send menu to database', (done) => {
-      console.log('send menu')
       const menu = {
         name: 'test',
         price: 123,
@@ -93,22 +100,13 @@ describe('Action creators - async', () => {
       }
 
       const action = {
-        type: 'SELECT_MENU',
+        type: types.SELECT_MENU,
         payload: menu,
         apiEndpoint: '/order'
       }
 
       const expectedActions = [
-        {
-          type: 'SELECT_MENU',
-          payload: {
-            name: 'test',
-            price: 123,
-            restaurant: 123,
-            _id: 123
-          },
-          apiEndpoint: '/order'
-        }, {
+        action, {
           type: 'RNS_SHOW_NOTIFICATION',
           title: 'Saved',
           message: 'Wybrano danie główne: ' + menu.name,
@@ -118,56 +116,178 @@ describe('Action creators - async', () => {
           level: 'info'
         }
       ]
-
+      const tests = [simpleActionTest, notificationTest]
       const save = true
 
-      nock('http://' + process.env.host).post(action.apiEndpoint).reply(200, {body: menu})
-      const myStore = mockStore({}, expectedActions, done)
-      myStore.dispatch(actions.selectMenu(menu, save)).then(() => {}).catch((e) => done(e))
+      nock('http://' + process.env.host)
+        .post(action.apiEndpoint)
+        .reply(200, { body: menu })
+      const myStore = mockStore({}, expectedActions, tests, done)
+      myStore.dispatch(actions.selectMenu(menu, save))
+        .then(() => {})
+        .catch((e) => done(e))
+      // we need to wait for debouncer
+      clock.tick(1200)
+
+    })
+
+    it('should update redux store without saving', () => {
+      const menu = {
+        name: 'test',
+        price: 123,
+        restaurant: 123, //ObjectId
+        _id: 123
+      }
+
+      const action = {
+        type: types.SELECT_MENU,
+        payload: menu,
+        apiEndpoint: '/order'
+      }
+
+      const save = false
+      expect(actions.selectMenu(menu, save))
+        .to.deep.equal(action)
+    })
+  })
+
+  describe('update addon action creator', () => {
+    it('should send addon to database', (done) => {
+      const addon = {
+        name: 'test',
+        price: 123,
+        restaurant: 123, //ObjectId
+        items: [
+          't1', 't2'
+        ],
+        _id: 123
+      }
+
+      const action = {
+        type: types.SELECT_ADDON,
+        payload: addon,
+        apiEndpoint: '/order'
+      }
+
+      const expectedActions = [
+        action, {
+          type: 'RNS_SHOW_NOTIFICATION',
+          title: 'Saved',
+          message: 'Wybrano dodatki: ' + addon.name,
+          position: 'br',
+          autoDismiss: 3,
+          uid: 1364767201200,
+          level: 'info'
+        }
+      ]
+      const tests = [simpleActionTest, notificationTest]
+      const save = true
+
+      nock('http://' + process.env.host)
+        .post(action.apiEndpoint)
+        .reply(200, { body: addon })
+      const myStore = mockStore({}, expectedActions, tests, done)
+      myStore.dispatch(actions.selectAddon(addon, save))
+        .then(() => {})
+        .catch((e) => done(e))
+      // we need to wait for debouncer
+      clock.tick(1200)
+
+    })
+
+    it('should update redux store without saving', () => {
+      const addon = {
+        name: 'test',
+        price: 123,
+        restaurant: 123, //ObjectId
+        items: [
+          't1', 't2'
+        ],
+        _id: 123
+      }
+
+      const action = {
+        type: types.SELECT_ADDON,
+        payload: addon,
+        apiEndpoint: '/order'
+      }
+
+      const save = false
+      expect(actions.selectAddon(addon, save))
+        .to.deep.equal(action)
+    })
+  })
+
+  it('should remove addon from database', (done) => {
+    const action = {
+      type: types.REMOVE_ADDON,
+      apiEndpoint: '/order'
+    }
+
+    const expectedActions = [
+      action, {
+        type: 'RNS_SHOW_NOTIFICATION',
+        title: 'Saved',
+        message: 'Usunięto dodatek',
+        position: 'br',
+        autoDismiss: 3,
+        uid: 1364767201200,
+        level: 'info'
+      }
+    ]
+
+    const tests = [simpleActionTest, notificationTest]
+    const save = true
+
+    nock('http://' + process.env.host)
+      .post(action.apiEndpoint)
+      .reply(200, { body: '' })
+    const myStore = mockStore({}, expectedActions, tests, done)
+    myStore.dispatch(actions.removeAddon())
+      .then(() => {})
+      .catch((e) => done(e))
+    // we need to wait for debouncer
+    clock.tick(1200)
+
+  })
+
+  describe('update comment action creator', () => {
+    it('should add comment to database', (done) => {
+      const comment = 'some comment'
+      const action = {
+        type: types.ADD_COMMENT,
+        payload: comment,
+        apiEndpoint: '/order'
+      }
+
+      const expectedActions = [
+      action, {
+          type: 'RNS_SHOW_NOTIFICATION',
+          title: 'Saved',
+          message: 'Dodano komentarz: ' + comment,
+          position: 'br',
+          autoDismiss: 3,
+          uid: 1364767201200,
+          level: 'info'
+      }
+    ]
+
+      const tests = [simpleActionTest, notificationTest]
+      const save = true
+
+      nock('http://' + process.env.host)
+        .post(action.apiEndpoint)
+        .reply(200, { body: '' })
+      const myStore = mockStore({}, expectedActions, tests, done)
+      myStore.dispatch(actions.addComment(comment, save))
+        .then(() => {})
+        .catch((e) => done(e))
       // we need to wait for debouncer
       clock.tick(1200)
 
     })
   })
+
+
+
 })
-
-function mockStore(getState, expectedActions, onLastAction) {
-  const promisifyMiddleware = ({dispatch, getState}) => next => action => {
-    return new Promise((resolve) => resolve(next(action))).catch((e) => {
-      onLastAction(e)
-      onLastAction = () => {}
-    })
-  }
-  const middlewares = [promisifyMiddleware, thunk]
-
-  if (!Array.isArray(expectedActions)) {
-    throw new Error('expectedActions should be an array of expected actions.');
-  }
-  if (typeof onLastAction !== 'undefined' && typeof onLastAction !== 'function') {
-    throw new Error('onLastAction should either be undefined or function.');
-  }
-
-  function mockStoreWithoutMiddleware() {
-    return {
-      getState() {
-        return typeof getState === 'function'
-          ? getState()
-          : getState;
-      },
-
-      dispatch(action) {
-        const expectedAction = expectedActions.shift();
-        expect(action).to.be.an('object')
-        expect(action).to.have.all.keys(Object.keys(expectedAction))
-        if (onLastAction && !expectedActions.length) {
-          onLastAction();
-        }
-        return action;
-      }
-    };
-  }
-
-  const mockStoreWithMiddleware = applyMiddleware(...middlewares)(mockStoreWithoutMiddleware);
-
-  return mockStoreWithMiddleware();
-}

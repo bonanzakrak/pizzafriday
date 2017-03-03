@@ -12,15 +12,15 @@ const getNotification = (text) => {
 }
 
 const updateUser = (user) => {
-  return {type: 'USER_UPDATED', payload: user}
+  return { type: 'USER_UPDATED', payload: user }
 }
 
 const selectRestaurant = (restaurant, isDisabled) => {
-  if (!isDisabled)
-    return {type: 'SELECT_RESTAURANT', payload: restaurant}
+  if(!isDisabled)
+    return { type: 'SELECT_RESTAURANT', payload: restaurant }
   else
-    return {type: 'BLANK'}
-  }
+    return { type: 'BLANK' }
+}
 
 const updateRestaurant = (restaurant, save = true) => {
   const action = {
@@ -28,10 +28,10 @@ const updateRestaurant = (restaurant, save = true) => {
     payload: restaurant,
     apiEndpoint: '/restaurant'
   }
-  if (!save)
+  if(!save)
     return action
   else
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
       return api.saveSelection(action, (restaurants) => {
         // get data from response (new id's)
         action.payload = restaurants
@@ -39,7 +39,7 @@ const updateRestaurant = (restaurant, save = true) => {
         dispatch(getNotification('Zapisano restauracje'))
       })
     }
-  }
+}
 
 const selectMenu = (menu, save = true) => {
   const action = {
@@ -47,15 +47,18 @@ const selectMenu = (menu, save = true) => {
     payload: menu,
     apiEndpoint: '/order'
   }
-
-  return function(dispatch, getState) {
-    dispatch(action)
-    if (save) {
-      api.saveSelection(action, () => {
-        dispatch(getNotification('Wybrano danie główne: ' + menu.name))
-      })
+  if(!save)
+    return action
+  else
+    return function (dispatch, getState) {
+      dispatch(action)
+      if(save) {
+        api.saveSelection(action, () => {
+          dispatch(getNotification('Wybrano danie główne: ' + menu.name))
+        })
+      }
     }
-  }
+
 }
 
 const selectAddon = (addon, save = true) => {
@@ -64,14 +67,18 @@ const selectAddon = (addon, save = true) => {
     payload: addon,
     apiEndpoint: '/order'
   }
-  return function(dispatch, getState) {
-    dispatch(action)
-    if (save) {
-      api.saveSelection(action, () => {
-        dispatch(getNotification('Wybrano dodatki: ' + addon.name))
-      })
+
+  if(!save)
+    return action
+  else
+    return function (dispatch, getState) {
+      dispatch(action)
+      if(save) {
+        api.saveSelection(action, () => {
+          dispatch(getNotification('Wybrano dodatki: ' + addon.name))
+        })
+      }
     }
-  }
 }
 
 const removeAddon = () => {
@@ -80,7 +87,7 @@ const removeAddon = () => {
     apiEndpoint: '/order'
   }
 
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(action)
     api.saveSelection(action, () => {
       dispatch(getNotification('Usunięto dodatek'))
@@ -94,23 +101,24 @@ const addComment = (comment, save = true) => {
     payload: comment,
     apiEndpoint: '/order'
   }
-
-  return function(dispatch, getState) {
-    dispatch(action)
-    if (save) {
-      api.saveSelection(action, () => {
-        dispatch(getNotification('Dodano komentarz: ' + comment))
-      })
+  if(!save)
+    return action
+  else
+    return function (dispatch, getState) {
+      dispatch(action)
+      if(save) {
+        api.saveSelection(action, () => {
+          dispatch(getNotification('Dodano komentarz: ' + comment))
+        })
+      }
     }
-  }
 }
 
-const setAvailableRestaurants = (restaurant, save = true, checked) => {
+const setAvailableRestaurants = (restaurant, save = true) => {
   const action = {
     type: 'SET_RESTAURANTS',
     payload: restaurant,
-    save: save,
-    checked: checked
+    save: save
   }
   return action
 }

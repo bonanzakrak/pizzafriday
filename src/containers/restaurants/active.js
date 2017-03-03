@@ -18,7 +18,7 @@ class ActiveRestaurants extends Component {
         return (
           <div className="checkbox" key={restaurant.title}>
             <label>
-              <input checked={checked} type="checkbox" name="restaurant" value={restaurant.title} onChange={() => this.props.setAvailableRestaurants(restaurant,true,checked)}/>{restaurant.title}
+              <input checked={checked} type="checkbox" name="restaurant" value={restaurant.title} onChange={() => this.props.setAvailableRestaurants(restaurant,true)}/>{restaurant.title}
             </label>
           </div>
         )

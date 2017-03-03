@@ -15,7 +15,7 @@ export default function(state = [], action) {
           array = _unionBy(action.payload, array)
         else
           array.push(action.payload)
-console.log(array)
+
         if (action.save)
           api.saveRestaurants(array)
 

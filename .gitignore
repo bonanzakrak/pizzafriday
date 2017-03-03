@@ -2,3 +2,5 @@
 /dist
 /server/config.js
 npm-debug.log
+/server/dist/bundle.js
+/server/dist/bundle-min.js
