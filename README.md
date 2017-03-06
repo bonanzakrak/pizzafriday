@@ -22,3 +22,4 @@ Allow to select food from restaurants on pizza day.
 
 
 [![Build Status](https://travis-ci.org/bonanzakrak/pizzafriday.svg?branch=master)](https://travis-ci.org/bonanzakrak/pizzafriday)
+[![CodeFactor](https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday/badge/master)](https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday/overview/master)

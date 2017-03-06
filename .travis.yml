@@ -4,3 +4,6 @@ node_js:
 services: mongodb
 before_install:
   - cp server/config.example.js server/config.js
+addons:
+  code_climate:
+    repo_token: da8b939ef2bc463f5f516455ce7ccf9e5dbbe1649e19381730a80fe03e5b95c6
