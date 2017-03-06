@@ -6,7 +6,8 @@ engines:
     count_threshold: 3
     config:
       languages:
-      - javascript
+        javascript:
+          count_threshold: 3
   eslint:
     enabled: true
   fixme:
