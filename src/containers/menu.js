@@ -18,7 +18,7 @@ class Menu extends Component {
 
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id != this.props.selectedRestaurant._id)) {
+    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
       this.setState({loading: true})
       this.getMenu(nextProps.selectedRestaurant._id)
     }

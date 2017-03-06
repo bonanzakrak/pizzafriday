@@ -8,8 +8,8 @@ import {
   notificationTest
 } from './action.helpers'
 
-describe('Action creators', () => {
-  it('should create an action to display notification', () => {
+describe('should return action creators', () => {
+  it('to display notification', () => {
     const text = 'notification text'
     const expectedAction = {
       type: 'RNS_SHOW_NOTIFICATION',
@@ -25,7 +25,7 @@ describe('Action creators', () => {
     notificationTest(action, expectedAction)
   })
 
-  it('should create an action to update user', () => {
+  it('to update user', () => {
     const user = {
       name: 'test',
       _id: 123
@@ -40,7 +40,7 @@ describe('Action creators', () => {
   })
 
   describe('select restaurant action creator', () => {
-    it('should create an action to select restaurant when is not disabled', () => {
+    it('to select restaurant when is not disabled', () => {
       const restaurant = {
         title: 'test',
         website: 'test website',
@@ -56,7 +56,7 @@ describe('Action creators', () => {
         .to.deep.equal(expectedAction)
 
     })
-    it('should create an action to blank when is disabled', () => {
+    it('to blank when is disabled', () => {
       const restaurant = {
         title: 'test',
         website: 'test website',
@@ -73,7 +73,7 @@ describe('Action creators', () => {
     })
   })
 
-  it('should create an action for active restaurant', () => {
+  it('for active restaurant', () => {
     const restaurant = {
       title: 'test',
       website: 'test website',
@@ -90,7 +90,7 @@ describe('Action creators', () => {
       .to.deep.equal(expectedAction)
   })
 
-  it('should create an action for grouped orders', () => {
+  it('for grouped orders', () => {
     const orders = [{}, {}]
     const expectedAction = {
       type: 'GROUPED_ORDERS',
@@ -101,7 +101,7 @@ describe('Action creators', () => {
   })
 
 
-  it('should create an action for grouped orders', () => {
+  it('for grouped orders', () => {
     const orders = [{}, {}]
     const expectedAction = {
       type: 'ALL_ORDERS',
@@ -112,7 +112,7 @@ describe('Action creators', () => {
       .to.deep.equal(expectedAction)
   })
 
-  it('should create an action for menu from api', () => {
+  it('for menu from api', () => {
     // shoult pass by everything what we input
     const menu = [{
       name: 'test',
@@ -134,7 +134,7 @@ describe('Action creators', () => {
     expect(actions.setMenu(menu))
       .to.deep.equal(expectedAction)
   })
-  it('should create an action for addons from api', () => {
+  it('for addons from api', () => {
     const addons = [{
       name: 'test',
       price: 123,

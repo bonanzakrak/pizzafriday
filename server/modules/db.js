@@ -1,6 +1,4 @@
 const moment = require('moment')
-const lodash = require('lodash')
-
 const models = require('../models')
 
 module.exports = {
@@ -12,7 +10,7 @@ module.exports = {
         id: user.id
       }, user, {upsert: true})
       .then((result) => {
-        cb(null, result.id)
+        return cb(null, result.id)
       })
       .catch((error) => cb(error, null))
   },
@@ -23,9 +21,9 @@ module.exports = {
       .find({id: payload.id})
       .then((result) => {
         if (result.length === 1)
-          cb(null, result[0])
+          return cb(null, result[0])
         else
-          cb(null, null)
+          return cb(null, null)
       })
       .catch((error) => cb(error, null))
   },

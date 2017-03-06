@@ -13,7 +13,7 @@ class Addons extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id != this.props.selectedRestaurant._id)) {
+    if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
       this.setState({loading: true})
       this.getAddon(nextProps.selectedRestaurant._id)
     }

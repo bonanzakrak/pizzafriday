@@ -7,12 +7,12 @@ const _self = {
     api.auth((res) => {
       if (res.authenticated) {
         if (cb)
-          cb(true, res)
+          return cb(true, res)
         this.onChange(true, res)
       } else {
         cookie.remove('JWToken')
         if (cb)
-          cb(false)
+          return cb(false)
         this.onChange(false)
       }
     })

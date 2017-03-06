@@ -71,6 +71,17 @@ module.exports = {
 
     const mockStoreWithMiddleware = applyMiddleware(...middlewares)(mockStoreWithoutMiddleware)
     return mockStoreWithMiddleware()
+  },
+  getNotificationAction(text){
+    return {
+      type: 'RNS_SHOW_NOTIFICATION',
+      title: 'Saved',
+      message: text,
+      position: 'br',
+      autoDismiss: 3,
+      uid: 1364767201200,
+      level: 'info'
+    }
   }
 
 }

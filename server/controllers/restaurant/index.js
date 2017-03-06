@@ -15,7 +15,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   db
     .setRestaurant(req.body)
-    .then(restaurant => db.getRestaurants())
+    .then(() => db.getRestaurants())
     .then(res.json.bind(res))
     .catch(next)
 })

@@ -7,8 +7,8 @@ import sinon from 'sinon'
 import * as actions from '../../src/actions'
 import * as types from '../../src/actions/types'
 
-import { notificationTest, simpleActionTest, mockStore } from './action.helpers'
-describe('Action creators - async', () => {
+import { notificationTest, simpleActionTest, mockStore, getNotificationAction } from './action.helpers'
+describe('asyncronous action creators', () => {
   let clock
   before(function () {
     clock = sinon.useFakeTimers()
@@ -22,9 +22,8 @@ describe('Action creators - async', () => {
     nock.cleanAll()
   })
 
-  describe('update restaurant action creator', () => {
-
-    it('should send data to database', (done) => {
+  describe('update restaurant', () => {
+    it('update redux with saving in db', (done) => {
       const restaurant = {
         title: 'test',
         website: 'test website',
@@ -44,15 +43,8 @@ describe('Action creators - async', () => {
             body: restaurant
           },
           apiEndpoint: '/restaurant'
-        }, {
-          type: 'RNS_SHOW_NOTIFICATION',
-          title: 'Saved',
-          message: 'Zapisano restauracje',
-          position: 'br',
-          autoDismiss: 3,
-          uid: 1364767201200,
-          level: 'info'
-        }
+        },
+        getNotificationAction('Zapisano restauracje')
       ]
 
       const tests = [simpleActionTest, notificationTest]
@@ -71,7 +63,7 @@ describe('Action creators - async', () => {
 
     })
 
-    it('should update redux store without saving', () => {
+    it('update redux store without saving in db', () => {
       const restaurant = {
         title: 'test',
         website: 'test website',
@@ -90,8 +82,8 @@ describe('Action creators - async', () => {
     })
   })
 
-  describe('update menu action creator', () => {
-    it('should send menu to database', (done) => {
+  describe('update menu', () => {
+    it('update redux with saving in db', (done) => {
       const menu = {
         name: 'test',
         price: 123,
@@ -106,15 +98,7 @@ describe('Action creators - async', () => {
       }
 
       const expectedActions = [
-        action, {
-          type: 'RNS_SHOW_NOTIFICATION',
-          title: 'Saved',
-          message: 'Wybrano danie główne: ' + menu.name,
-          position: 'br',
-          autoDismiss: 3,
-          uid: 1364767201200,
-          level: 'info'
-        }
+        action, getNotificationAction('Wybrano danie główne: ' + menu.name)
       ]
       const tests = [simpleActionTest, notificationTest]
       const save = true
@@ -131,7 +115,7 @@ describe('Action creators - async', () => {
 
     })
 
-    it('should update redux store without saving', () => {
+    it('update redux', () => {
       const menu = {
         name: 'test',
         price: 123,
@@ -151,8 +135,8 @@ describe('Action creators - async', () => {
     })
   })
 
-  describe('update addon action creator', () => {
-    it('should send addon to database', (done) => {
+  describe('update addon', () => {
+    it('update redux with saving in db', (done) => {
       const addon = {
         name: 'test',
         price: 123,
@@ -170,15 +154,7 @@ describe('Action creators - async', () => {
       }
 
       const expectedActions = [
-        action, {
-          type: 'RNS_SHOW_NOTIFICATION',
-          title: 'Saved',
-          message: 'Wybrano dodatki: ' + addon.name,
-          position: 'br',
-          autoDismiss: 3,
-          uid: 1364767201200,
-          level: 'info'
-        }
+        action, getNotificationAction('Wybrano dodatki: ' + addon.name)
       ]
       const tests = [simpleActionTest, notificationTest]
       const save = true
@@ -195,7 +171,7 @@ describe('Action creators - async', () => {
 
     })
 
-    it('should update redux store without saving', () => {
+    it('update redux', () => {
       const addon = {
         name: 'test',
         price: 123,
@@ -218,22 +194,14 @@ describe('Action creators - async', () => {
     })
   })
 
-  it('should remove addon from database', (done) => {
+  it('remove addon from db', (done) => {
     const action = {
       type: types.REMOVE_ADDON,
       apiEndpoint: '/order'
     }
 
     const expectedActions = [
-      action, {
-        type: 'RNS_SHOW_NOTIFICATION',
-        title: 'Saved',
-        message: 'Usunięto dodatek',
-        position: 'br',
-        autoDismiss: 3,
-        uid: 1364767201200,
-        level: 'info'
-      }
+      action, getNotificationAction('Usunięto dodatek')
     ]
 
     const tests = [simpleActionTest, notificationTest]
@@ -251,8 +219,8 @@ describe('Action creators - async', () => {
 
   })
 
-  describe('update comment action creator', () => {
-    it('should add comment to database', (done) => {
+  describe('update comment', () => {
+    it('add comment to database', (done) => {
       const comment = 'some comment'
       const action = {
         type: types.ADD_COMMENT,
@@ -261,15 +229,7 @@ describe('Action creators - async', () => {
       }
 
       const expectedActions = [
-      action, {
-          type: 'RNS_SHOW_NOTIFICATION',
-          title: 'Saved',
-          message: 'Dodano komentarz: ' + comment,
-          position: 'br',
-          autoDismiss: 3,
-          uid: 1364767201200,
-          level: 'info'
-      }
+      action, getNotificationAction('Dodano komentarz: ' + comment)
     ]
 
       const tests = [simpleActionTest, notificationTest]
@@ -287,7 +247,4 @@ describe('Action creators - async', () => {
 
     })
   })
-
-
-
 })

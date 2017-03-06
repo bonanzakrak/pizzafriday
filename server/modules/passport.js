@@ -16,7 +16,7 @@ passport.use(new OAuth2Strategy({
   scope: ['identity.basic', 'identity.email', 'identity.avatar', 'identity.team']
 }, (accessToken, refreshToken, profile, cb) => {
   request('https://slack.com/api/users.identity?token=' + accessToken, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       return cb(null, JSON.parse(body).user)
     }
   })

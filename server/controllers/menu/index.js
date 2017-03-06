@@ -14,7 +14,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 
 router.get('/:restaurant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   if (!req.db.mongoose.Types.ObjectId.isValid(req.params.restaurant))
-    next(new Error('restaurant is not valid ObjectId'))
+    return next(new Error('restaurant is not valid ObjectId'))
   else
     req
       .db

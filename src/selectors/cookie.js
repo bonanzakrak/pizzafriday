@@ -22,7 +22,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var IS_NODE = process && process.env && process.env.NODE_ENV === 'test';
 
 var _rawCookie = {};
-var _res = undefined;
+var _res;
 
 function _isResWritable() {
   return _res && !_res.headersSent;
