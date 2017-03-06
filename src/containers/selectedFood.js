@@ -11,28 +11,25 @@ class Menu extends Component {
     super(props)
   }
 
-  showItem(item){
-    return(
+  showItem(item) {
+    return (
       <span>
         <b>{item.name}</b>
         {item.altName && <i className="small text-muted">
           / {item.altName}</i>}
-        {this.restaurantUnavailable(item.restaurant) }
+        {this.restaurantUnavailable(item.restaurant)}
       </span>
     )
   }
 
-  restaurantUnavailable(restaurantId){
-    return ( filter(this.props.availableRestaurants, {_id:restaurantId}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>)
+  restaurantUnavailable(restaurantId) {
+    return (filter(this.props.availableRestaurants, {_id: restaurantId}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>)
   }
 
   showMenu() {
     if (this.props.selectedMenu) {
       return (
-        <div className="panel-body">Wybrane danie główne:<br/>
-          {this.showItem(this.props.selectedMenu)}
-
-
+        <div className="panel-body">Wybrane danie główne:<br/> {this.showItem(this.props.selectedMenu)}
 
         </div>
       )
@@ -43,8 +40,7 @@ class Menu extends Component {
   showAddon() {
     if (this.props.selectedAddon)
       return (
-        <div className="panel-body">Wybrany dodatek:<br/>
-          {this.showItem(this.props.selectedAddon)}
+        <div className="panel-body">Wybrany dodatek:<br/> {this.showItem(this.props.selectedAddon)}
 
           <br/>
           <input type="button" className="btn btn-sm btn-danger" value="usuń dodatek" onClick={() => this.props.removeAddon()}/>

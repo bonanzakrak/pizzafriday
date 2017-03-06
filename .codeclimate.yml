@@ -4,12 +4,10 @@ engines:
     enabled: true
   duplication:
     enabled: true
+    count_threshold: 3
     config:
       languages:
-      - ruby
       - javascript
-      - python
-      - php
   eslint:
     enabled: true
   fixme:
@@ -20,9 +18,5 @@ ratings:
   - "**.inc"
   - "**.js"
   - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
 exclude_paths:
 - test/
