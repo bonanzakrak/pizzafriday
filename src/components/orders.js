@@ -26,6 +26,17 @@ class Orders extends Component {
     getOrders('/order', this.props.setOrders)
   }
 
+  displayItem(item) {
+    return (<td>{
+      item && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
+        <i>
+          {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
+        </i>
+        <br/> {order.menu.name}
+      </Warning>
+    }</td>)
+  }
+
   renderList() {
     const ordersSorted = _sortBy(this.props.orders, function(order) {
       let sort = []
@@ -53,20 +64,11 @@ class Orders extends Component {
               <img src={order.user.image_48} className="rounded"/> {order.user.name}
             </td>
             <td>
-              {order.menu && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
-                <i>
-                  {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
-                </i>
-                <br/> {order.menu.name}
-              </Warning>}
+              {this.displayItem(order.menu)}
             </td>
             <td>
-              {order.addon && <Warning warn={filter(this.props.availableRestaurants, {_id: order.addon.restaurant}).length}>
-                <i>
-                  {filter(this.props.restaurants, {_id: order.addon.restaurant})[0].title}
-                </i>
-                <br/> {order.addon.name}
-              </Warning>}
+
+              {this.displayItem(order.addon)}
             </td>
 
             <td>{order.comment}</td>
