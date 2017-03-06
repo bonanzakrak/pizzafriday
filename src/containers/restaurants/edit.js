@@ -22,24 +22,28 @@ class EditRestaurant extends Component {
     event.preventDefault()
   }
 
+  renderField(label, fieldName, id, value){
+    return(
+      <div className="form-group">
+        <label htmlFor={fieldName + id}>
+          {label}
+        </label>
+        <input type="text" name={fieldName} className="form-control" id={fieldName + id} defaultValue={value} placeholder="Restaurant name"/>
+
+      </div>
+    )
+  }
+
   renderForm() {
     return (
       <form onSubmit={this
         .submit
         .bind(this, this.props.restaurant)}>
-        <div className="form-group">
-          <label htmlFor={'title' + this.props.restaurant.id}>
-            Restaurant name
-          </label>
-          <input type="text" name="title" className="form-control" id={'title' + this.props.restaurant.id} defaultValue={this.props.restaurant.title} placeholder="Restaurant name"/>
 
-        </div>
-        <div className="form-group">
-          <label htmlFor={'website' + this.props.restaurant.id}>
-            Restaurant website
-          </label>
-          <input type="text" name="website" className="form-control" id={'website' + this.props.restaurant.id} defaultValue={this.props.restaurant.website} placeholder="Restaurant website"/>
-        </div>
+
+        {this.renderField("Restaurant name","title",this.props.restaurant.id, this.props.restaurant.title )}
+
+        {this.renderField("Restaurant website","website",this.props.restaurant.id, this.props.restaurant.website )}
 
         <div className="form-group clearfix">
           <button type="submit" className="btn btn-success">Submit</button>

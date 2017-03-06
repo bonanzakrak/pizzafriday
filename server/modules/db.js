@@ -130,7 +130,7 @@ module.exports = {
     return models
       .Restaurant
       .findOneAndUpdate({
-        id: restaurant.id
+        _id: restaurant._id
       }, {
         $set: {
           title: restaurant.title,

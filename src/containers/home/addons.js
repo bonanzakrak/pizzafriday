@@ -1,11 +1,8 @@
-import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {selectAddon, setAddons} from '../../actions/index'
-import _sample from 'lodash.sample'
 import {getSelRestaurant} from '../../selectors'
-import cookie from '../../selectors/cookie'
-import Loading from './loading'
+
 import List from './list'
 class Addons extends List {
   constructor(props) {
