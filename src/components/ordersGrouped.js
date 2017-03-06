@@ -10,7 +10,7 @@ import {getOrders} from '../actions/api'
 class OrdersGrouped extends Component {
   constructor(props) {
     super(props)
-    this.getOrders()
+    this.getOrdersGrouped()
   }
 
   render() {
@@ -76,15 +76,8 @@ class OrdersGrouped extends Component {
     })
   }
 
-  getOrders() {
-    getOrders('/order/grouped').then((json) => {
-      this
-        .props
-        .setGroupedOrders(json)
-
-    }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message)
-    })
+  getOrdersGrouped() {
+    getOrders('/order/grouped', this.props.setGroupedOrders)
   }
 }
 

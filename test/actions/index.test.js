@@ -1,12 +1,9 @@
 import React from 'react'
 
-
 import * as actions from '../../src/actions'
 import * as types from '../../src/actions/types'
 
-import {
-  notificationTest
-} from './action.helpers'
+import {notificationTest, getSampleAddon, getSampleMenu} from './action.helpers'
 
 describe('should return action creators', () => {
   it('to display notification', () => {
@@ -36,7 +33,9 @@ describe('should return action creators', () => {
     }
 
     expect(actions.updateUser(user))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
 
   describe('select restaurant action creator', () => {
@@ -53,7 +52,9 @@ describe('should return action creators', () => {
         payload: restaurant
       }
       expect(actions.selectRestaurant(restaurant, isDisabled))
-        .to.deep.equal(expectedAction)
+        .to
+        .deep
+        .equal(expectedAction)
 
     })
     it('to blank when is disabled', () => {
@@ -68,7 +69,9 @@ describe('should return action creators', () => {
         type: types.BLANK
       }
       expect(actions.selectRestaurant(restaurant, isDisabled))
-        .to.deep.equal(expectedAction)
+        .to
+        .deep
+        .equal(expectedAction)
 
     })
   })
@@ -87,7 +90,9 @@ describe('should return action creators', () => {
       save: true
     }
     expect(actions.setAvailableRestaurants(restaurant, isDisabled))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
 
   it('for grouped orders', () => {
@@ -97,9 +102,10 @@ describe('should return action creators', () => {
       payload: orders
     }
     expect(actions.setGroupedOrders(orders))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
-
 
   it('for grouped orders', () => {
     const orders = [{}, {}]
@@ -109,22 +115,17 @@ describe('should return action creators', () => {
     }
 
     expect(actions.setOrders(orders))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
 
   it('for menu from api', () => {
     // shoult pass by everything what we input
-    const menu = [{
-      name: 'test',
-      price: 123,
-      restaurant: 123, //ObjectId
-      _id: 123
-    }, {
-      name: 'test 2',
-      price: 321,
-      restaurant: 321, //ObjectId
-      _id: 321
-    }]
+    const menu = [
+      getSampleMenu('menu item 1', 123, 123, 123),
+      getSampleMenu('menu item 2', 321, 321, 321)
+    ]
 
     const expectedAction = {
       type: types.SET_MENU,
@@ -132,34 +133,28 @@ describe('should return action creators', () => {
     }
 
     expect(actions.setMenu(menu))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
   it('for addons from api', () => {
-    const addons = [{
-      name: 'test',
-      price: 123,
-      restaurant: 123, //ObjectId
-      items: [
-      't1', 't2'
-    ],
-      _id: 123
-    }, {
-      name: 'test 2',
-      price: 321,
-      restaurant: 321, //ObjectId
-      items: [
-      't2', 't3'
-    ],
-      _id: 321
-    }]
+    const addons = [
+      getSampleAddon('addon item 1', 123, 123, [
+        'a1', 'a2'
+      ], 123),
+      getSampleAddon('addon item 2', 321, 321, [
+        'a2', 'a3'
+      ], 321)
+    ]
     const expectedAction = {
       type: types.SET_ADDONS,
       payload: addons
     }
 
     expect(actions.setAddons(addons))
-      .to.deep.equal(expectedAction)
+      .to
+      .deep
+      .equal(expectedAction)
   })
-
 
 })

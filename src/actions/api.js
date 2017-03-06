@@ -47,7 +47,9 @@ const _self = {
     })
   },
   saveSelection(action, cb) {
-    const func = (action, cb) => {return _self.saveSelectionFull(action, cb)}
+    const func = (action, cb) => {
+      return _self.saveSelectionFull(action, cb)
+    }
     return _self.getDebouncer(action.type, 1000, func)(action, cb)
   },
   getDebouncer(key, wait, func) {
@@ -63,7 +65,7 @@ const _self = {
     return debouncer
   },
   saveSelectionFull(action, cb) {
-     return fetch('http://' + process.env.host + action.apiEndpoint, {
+    return fetch('http://' + process.env.host + action.apiEndpoint, {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(action),
@@ -84,12 +86,16 @@ const _self = {
       return error
     })
   },
-  getOrders(endpoint){
+  getOrders(endpoint, callback) {
     return fetch('http://' + process.env.host + endpoint, {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }
       throw new Error('Network response was not ok.')
+    }).then((orders) => {
+      callback(orders)
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }
 }

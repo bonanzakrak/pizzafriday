@@ -6,7 +6,7 @@ import _sample from 'lodash.sample'
 import filter from 'lodash.filter'
 import {getSelRestaurant} from '../selectors'
 import cookie from '../selectors/cookie'
-
+import Loading from './loading'
 class Menu extends Component {
   constructor(props) {
     super(props)
@@ -68,15 +68,7 @@ class Menu extends Component {
       )
     else if (!this.props.selectedRestaurant || this.state.loading)
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <div className="panel-title pull-left">Danie główne</div>
-            <div className="clearfix"></div>
-          </div>
-          <div className="panel-body text-center">
-            <img src="/images/hourglass.svg"/>
-          </div>
-        </div>
+        <Loading text="Danie główne" />
       )
     else
       return (

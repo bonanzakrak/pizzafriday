@@ -23,13 +23,7 @@ class Orders extends Component {
   }
 
   getOrders() {
-    getOrders('/order').then((orders) => {
-      this
-        .props
-        .setOrders(orders)
-    }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message)
-    })
+    getOrders('/order', this.props.setOrders)
   }
 
   renderList() {

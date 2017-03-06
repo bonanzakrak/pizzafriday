@@ -66,6 +66,23 @@ module.exports = {
       uid: 1364767201200,
       level: 'info'
     }
+  },
+  getSampleMenu(name, price, restaurant, id){
+    return {
+      name: name,
+      price: price,
+      restaurant: restaurant, //ObjectId
+      _id: id
+    }
+  },
+  getSampleAddon(name, price, restaurant, items, id){
+    return {
+      name: name,
+      price: price,
+      restaurant: restaurant, //ObjectId
+      items: items,
+      _id: id
+    }
   }
 
 }

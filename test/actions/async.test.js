@@ -1,20 +1,26 @@
 import React from 'react'
 import nock from 'nock'
 
-
 import sinon from 'sinon'
 
 import * as actions from '../../src/actions'
 import * as types from '../../src/actions/types'
 
-import { notificationTest, simpleActionTest, mockStore, getNotificationAction } from './action.helpers'
+import {
+  notificationTest,
+  simpleActionTest,
+  mockStore,
+  getNotificationAction,
+  getSampleAddon,
+  getSampleMenu
+} from './action.helpers'
 describe('asyncronous action creators', () => {
   let clock
-  before(function () {
+  before(function() {
     clock = sinon.useFakeTimers()
   })
 
-  after(function () {
+  after(function() {
     clock.restore()
   })
 
@@ -53,13 +59,15 @@ describe('asyncronous action creators', () => {
 
       nock('http://' + process.env.host)
         .post(action.apiEndpoint)
-        .reply(200, { body: restaurant })
+        .reply(200, {body: restaurant})
       const myStore = mockStore({}, expectedActions, tests, done)
-      myStore.dispatch(actions.updateRestaurant(restaurant, save))
+      myStore
+        .dispatch(actions.updateRestaurant(restaurant, save))
         .then(() => {})
         .catch((e) => done(e))
-      // we need to wait for debouncer
-      clock.tick(1200)
+        // we need to wait for debouncer
+        clock
+        .tick(1200)
 
     })
 
@@ -78,18 +86,15 @@ describe('asyncronous action creators', () => {
 
       const save = false
       expect(actions.updateRestaurant(restaurant, save))
-        .to.deep.equal(action)
+        .to
+        .deep
+        .equal(action)
     })
   })
 
   describe('update menu', () => {
     it('update redux with saving in db', (done) => {
-      const menu = {
-        name: 'test',
-        price: 123,
-        restaurant: 123, //ObjectId
-        _id: 123
-      }
+      const menu = getSampleMenu('menu item 1', 123, 123, 123)
 
       const action = {
         type: types.SELECT_MENU,
@@ -98,30 +103,28 @@ describe('asyncronous action creators', () => {
       }
 
       const expectedActions = [
-        action, getNotificationAction('Wybrano danie główne: ' + menu.name)
+        action,
+        getNotificationAction('Wybrano danie główne: ' + menu.name)
       ]
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
       nock('http://' + process.env.host)
         .post(action.apiEndpoint)
-        .reply(200, { body: menu })
+        .reply(200, {body: menu})
       const myStore = mockStore({}, expectedActions, tests, done)
-      myStore.dispatch(actions.selectMenu(menu, save))
+      myStore
+        .dispatch(actions.selectMenu(menu, save))
         .then(() => {})
         .catch((e) => done(e))
-      // we need to wait for debouncer
-      clock.tick(1200)
+        // we need to wait for debouncer
+        clock
+        .tick(1200)
 
     })
 
     it('update redux', () => {
-      const menu = {
-        name: 'test',
-        price: 123,
-        restaurant: 123, //ObjectId
-        _id: 123
-      }
+      const menu = getSampleMenu('menu item 1', 123, 123, 123)
 
       const action = {
         type: types.SELECT_MENU,
@@ -131,21 +134,17 @@ describe('asyncronous action creators', () => {
 
       const save = false
       expect(actions.selectMenu(menu, save))
-        .to.deep.equal(action)
+        .to
+        .deep
+        .equal(action)
     })
   })
 
   describe('update addon', () => {
     it('update redux with saving in db', (done) => {
-      const addon = {
-        name: 'test',
-        price: 123,
-        restaurant: 123, //ObjectId
-        items: [
-          't1', 't2'
-        ],
-        _id: 123
-      }
+      const addon = getSampleAddon('addon item 1', 123, 123, [
+        'a1', 'a2'
+      ], 123)
 
       const action = {
         type: types.SELECT_ADDON,
@@ -154,33 +153,30 @@ describe('asyncronous action creators', () => {
       }
 
       const expectedActions = [
-        action, getNotificationAction('Wybrano dodatki: ' + addon.name)
+        action,
+        getNotificationAction('Wybrano dodatki: ' + addon.name)
       ]
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
       nock('http://' + process.env.host)
         .post(action.apiEndpoint)
-        .reply(200, { body: addon })
+        .reply(200, {body: addon})
       const myStore = mockStore({}, expectedActions, tests, done)
-      myStore.dispatch(actions.selectAddon(addon, save))
+      myStore
+        .dispatch(actions.selectAddon(addon, save))
         .then(() => {})
         .catch((e) => done(e))
-      // we need to wait for debouncer
-      clock.tick(1200)
+        // we need to wait for debouncer
+        clock
+        .tick(1200)
 
     })
 
     it('update redux', () => {
-      const addon = {
-        name: 'test',
-        price: 123,
-        restaurant: 123, //ObjectId
-        items: [
-          't1', 't2'
-        ],
-        _id: 123
-      }
+      const addon = getSampleAddon('addon item 1', 123, 123, [
+        'a1', 'a2'
+      ], 123)
 
       const action = {
         type: types.SELECT_ADDON,
@@ -190,7 +186,9 @@ describe('asyncronous action creators', () => {
 
       const save = false
       expect(actions.selectAddon(addon, save))
-        .to.deep.equal(action)
+        .to
+        .deep
+        .equal(action)
     })
   })
 
@@ -200,22 +198,22 @@ describe('asyncronous action creators', () => {
       apiEndpoint: '/order'
     }
 
-    const expectedActions = [
-      action, getNotificationAction('Usunięto dodatek')
-    ]
+    const expectedActions = [action, getNotificationAction('Usunięto dodatek')]
 
     const tests = [simpleActionTest, notificationTest]
     const save = true
 
     nock('http://' + process.env.host)
       .post(action.apiEndpoint)
-      .reply(200, { body: '' })
+      .reply(200, {body: ''})
     const myStore = mockStore({}, expectedActions, tests, done)
-    myStore.dispatch(actions.removeAddon())
+    myStore
+      .dispatch(actions.removeAddon())
       .then(() => {})
       .catch((e) => done(e))
-    // we need to wait for debouncer
-    clock.tick(1200)
+      // we need to wait for debouncer
+      clock
+      .tick(1200)
 
   })
 
@@ -229,21 +227,24 @@ describe('asyncronous action creators', () => {
       }
 
       const expectedActions = [
-      action, getNotificationAction('Dodano komentarz: ' + comment)
-    ]
+        action,
+        getNotificationAction('Dodano komentarz: ' + comment)
+      ]
 
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
       nock('http://' + process.env.host)
         .post(action.apiEndpoint)
-        .reply(200, { body: '' })
+        .reply(200, {body: ''})
       const myStore = mockStore({}, expectedActions, tests, done)
-      myStore.dispatch(actions.addComment(comment, save))
+      myStore
+        .dispatch(actions.addComment(comment, save))
         .then(() => {})
         .catch((e) => done(e))
-      // we need to wait for debouncer
-      clock.tick(1200)
+        // we need to wait for debouncer
+        clock
+        .tick(1200)
 
     })
   })

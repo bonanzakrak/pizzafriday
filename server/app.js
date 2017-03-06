@@ -36,7 +36,7 @@ app.use(require('./middlewares/error.js'))
 // lift server
 const port = process.env.PORT || 1337
 app.listen(port, () => {
-  console.log('Server is running on http://localhost:'+port+' or http://127.0.0.1:'+port)
+  //console.log('Server is running on http://localhost:'+port+' or http://127.0.0.1:'+port)
 })
 
 

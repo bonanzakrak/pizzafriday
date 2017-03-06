@@ -4,6 +4,8 @@ import {bindActionCreators} from 'redux'
 import {selectAddon, setAddons} from '../actions/index'
 import {getSelRestaurant} from '../selectors'
 import cookie from '../selectors/cookie'
+
+import Loading from './loading'
 class Addons extends Component {
   constructor(props) {
     super(props)
@@ -12,20 +14,20 @@ class Addons extends Component {
     }
   }
 
-  updateMenu(restaurant) {
+  updateAddon(restaurant) {
     this.setState({loading: true})
     this.getAddon(restaurant)
   }
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
-      this.updateMenu(nextProps.selectedRestaurant._id)
+      this.updateAddon(nextProps.selectedRestaurant._id)
     }
   }
 
   componentWillMount() {
     if (this.props.selectedRestaurant) {
-      this.updateMenu(this.props.selectedRestaurant._id)
+      this.updateAddon(this.props.selectedRestaurant._id)
     }
   }
 
@@ -36,15 +38,15 @@ class Addons extends Component {
       return this
         .props
         .addons
-        .map((menuItem) => {
+        .map((addonItem) => {
           let checked = false
-          if (this.props.selectedAddon && menuItem.name === this.props.selectedAddon.name)
+          if (this.props.selectedAddon && addonItem.name === this.props.selectedAddon.name)
             checked = true
           return (
-            <div className="radio" key={menuItem.name}>
+            <div className="radio" key={addonItem.name}>
               <label>
-                <input checked={checked} type="radio" name="addonItem" value={menuItem.name} onChange={() => this.props.selectAddon(menuItem)}/>{menuItem.name} {menuItem.altName && <i className="small text-muted">
-                  / {menuItem.altName}</i>}
+                <input checked={checked} type="radio" name="addonItem" value={addonItem.name} onChange={() => this.props.selectAddon(addonItem)}/>{addonItem.name} {addonItem.altName && <i className="small text-muted">
+                  / {addonItem.altName}</i>}
               </label>
             </div>
           )
@@ -56,15 +58,7 @@ class Addons extends Component {
       return (<div></div>)
     else if (this.state.loading)
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <div className="panel-title pull-left">Dodatki</div>
-            <div className="clearfix"></div>
-          </div>
-          <div className="panel-body text-center">
-            <img src="/images/hourglass.svg"/>
-          </div>
-        </div>
+        <Loading text="Dodatki" />
       )
     else
       return (
