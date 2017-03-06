@@ -23,7 +23,19 @@ Allow to select food from restaurants on pizza day.
 
 ### Badges
 Testing code review tools
-[![Build Status](https://travis-ci.org/bonanzakrak/pizzafriday.svg?branch=master)](https://travis-ci.org/bonanzakrak/pizzafriday)
-[![CodeFactor](https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday/badge)](https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a84edd7cd6b748c3a257f5041aa9133d)](https://www.codacy.com/app/bonanzakrak/pizzafriday?utm_source=github.com&utm_medium=referral&utm_content=bonanzakrak/pizzafriday&utm_campaign=badger)
-[![Code Climate](https://codeclimate.com/github/bonanzakrak/pizzafriday/badges/gpa.svg)](https://codeclimate.com/github/bonanzakrak/pizzafriday)
+
+|                  |        **master**         |       **develop**       |
+| ---------------: | :-----------------------: | :---------------------: |
+|     **Travis**   |     [![Master][1]][2]     |                         |
+|   **Codacy**     |    [![Codacy][3]][4]      |                         |
+| **Code Climate** |  [![Code Climate][5]][6]  |                         |
+| **Codefactor**   |  [![Codefactor][7]][8]    |         soon            |
+
+[1]: https://travis-ci.org/bonanzakrak/pizzafriday.svg?branch=master
+[2]: https://travis-ci.org/bonanzakrak/pizzafriday
+[7]: https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday/badge/master
+[8]: https://www.codefactor.io/repository/github/bonanzakrak/pizzafriday
+[5]:https://codeclimate.com/github/bonanzakrak/pizzafriday/badges/gpa.svg
+[6]: https://codeclimate.com/github/bonanzakrak/pizzafriday
+[3]: https://api.codacy.com/project/badge/Grade/a84edd7cd6b748c3a257f5041aa9133d
+[4]: https://www.codacy.com/app/bonanzakrak/pizzafriday?utm_source=github.com&utm_medium=referral&utm_content=bonanzakrak/pizzafriday&utm_campaign=badger

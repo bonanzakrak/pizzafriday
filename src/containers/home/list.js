@@ -7,7 +7,7 @@ import Loading from './loading'
 class List extends Component {
   constructor(props) {
     super(props)
-    console.log('LIST super')
+
     this.state = {
       loading: false,
       jwt: props.jwt || cookie.load('JWToken')
@@ -111,7 +111,7 @@ class List extends Component {
         .setList(json)
       this.setState({loading: false})
     }).catch((error) => {
-      console.log(error)
+      
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }

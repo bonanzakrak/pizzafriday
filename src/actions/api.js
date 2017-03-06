@@ -22,7 +22,7 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-      console.log(error)
+     
       console.log('There has been a problem with your fetch operation0: ' + error.message)
     })
   },
@@ -94,8 +94,10 @@ const _self = {
       }
       throw new Error('Network response was not ok.')
     }).then((orders) => {
+
       callback(orders)
     }).catch((error) => {
+
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }

@@ -27,14 +27,15 @@ class Orders extends Component {
   }
 
   displayItem(item) {
-    return (<td>{
-      item && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
+    return (
+      <td>{item && <Warning warn={filter(this.props.availableRestaurants, {_id: item.restaurant}).length}>
         <i>
-          {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
+          {filter(this.props.restaurants, {_id: item.restaurant})[0].title}
         </i>
-        <br/> {order.menu.name}
+        <br/> {item.name}
       </Warning>
-    }</td>)
+      }</td>
+    )
   }
 
   renderList() {
@@ -63,13 +64,10 @@ class Orders extends Component {
             <td>
               <img src={order.user.image_48} className="rounded"/> {order.user.name}
             </td>
-            <td>
-              {this.displayItem(order.menu)}
-            </td>
-            <td>
 
-              {this.displayItem(order.addon)}
-            </td>
+            {this.displayItem(order.menu)}
+
+            {this.displayItem(order.addon)}
 
             <td>{order.comment}</td>
           </tr>
