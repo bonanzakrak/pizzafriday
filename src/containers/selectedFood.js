@@ -17,8 +17,13 @@ class Menu extends Component {
         <b>{item.name}</b>
         {item.altName && <i className="small text-muted">
           / {item.altName}</i>}
+        {this.restaurantUnavailable(item.restaurant) }
       </span>
     )
+  }
+
+  restaurantUnavailable(restaurantId){
+    return ( filter(this.props.availableRestaurants, {_id:restaurantId}).length === 0 && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>)
   }
 
   showMenu() {
@@ -28,7 +33,7 @@ class Menu extends Component {
           {this.showItem(this.props.selectedMenu)}
 
 
-          {unavailableRestaurant && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
+
         </div>
       )
     } else
@@ -40,7 +45,7 @@ class Menu extends Component {
       return (
         <div className="panel-body">Wybrany dodatek:<br/>
           {this.showItem(this.props.selectedAddon)}
-          {unavailableRestaurant && <div className="alert alert-warning">Wybrałeś jedzenie z restauracji z której dziś nie zamawiamy</div>}
+
           <br/>
           <input type="button" className="btn btn-sm btn-danger" value="usuń dodatek" onClick={() => this.props.removeAddon()}/>
         </div>
@@ -64,13 +69,13 @@ class Menu extends Component {
         </div>
       )
     else {
-      const unavailableRestaurant = filter(this.props.availableRestaurants, {_id: this.props.selectedAddon.restaurant}).length === 0
+
       return (
         <div className="panel panel-success">
           <div className="panel-heading">Twoje zamówienie</div>
 
-          {this.showMenu(unavailableRestaurant)}
-          {this.showAddon(unavailableRestaurant)}
+          {this.showMenu()}
+          {this.showAddon()}
           <input name="notes" placeholder="Uwagi do zamówienia" className="form-control" value={this.props.comment} onChange={this
             ._onInputChange
             .bind(this)}/>

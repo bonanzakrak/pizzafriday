@@ -1,51 +1,49 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {selectMenu, setMenu} from '../actions/index'
 import _sample from 'lodash.sample'
-import filter from 'lodash.filter'
-import {getSelRestaurant} from '../selectors'
-import cookie from '../selectors/cookie'
+
+import cookie from '../../selectors/cookie'
 import Loading from './loading'
-class Menu extends Component {
+
+class List extends Component {
   constructor(props) {
     super(props)
+    console.log('LIST super')
     this.state = {
       loading: false,
       jwt: props.jwt || cookie.load('JWToken')
     }
   }
 
-  updateMenu(restaurant) {
+  updateList(restaurant) {
     this.setState({loading: true})
-    this.getMenu(restaurant)
+    this.getList(restaurant)
   }
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
-      this.updateMenu(nextProps.selectedRestaurant._id)
+      this.updateList(nextProps.selectedRestaurant._id)
     }
   }
 
   componentWillMount() {
     if (this.props.selectedRestaurant) {
-      this.updateMenu(this.props.selectedRestaurant._id)
+      this.updateList(this.props.selectedRestaurant._id)
     }
   }
 
   renderList() {
     return this
       .props
-      .menu
-      .map((menuItem) => {
+      .list
+      .map((item) => {
         let checked = false
-        if (this.props.selectedMenu && menuItem.name === this.props.selectedMenu.name)
+        if (this.props.selectedItem && item.name === this.props.selectedItem.name)
           checked = true
         return (
-          <div className="radio" key={menuItem.name}>
+          <div className="radio" key={item.name}>
             <label>
-              <input checked={checked} type="radio" name="menuItem" value={menuItem.name} onChange={() => this.props.selectMenu(menuItem)}/>{menuItem.name} {menuItem.altName && <i className="small text-muted">
-                / {menuItem.altName}</i>}
+              <input checked={checked} type="radio" name="item" value={item.name} onChange={() => this.props.selectItem(item)}/>{item.name} {item.altName && <i className="small text-muted">
+                / {item.altName}</i>}
             </label>
           </div>
         )
@@ -53,10 +51,10 @@ class Menu extends Component {
   }
 
   selectRandom() {
-    const _randomMenu = _sample(this.props.menu)
+    const _randomItem = _sample(this.props.list)
     this
       .props
-      .selectMenu(_randomMenu)
+      .selectItem(_randomItem)
       .bind(this)
   }
 
@@ -68,13 +66,13 @@ class Menu extends Component {
       )
     else if (!this.props.selectedRestaurant || this.state.loading)
       return (
-        <Loading text="Danie główne" />
+        <Loading text="{this.title}" />
       )
     else
       return (
         <div className="panel panel-default">
           <div className="panel-heading">
-            <div className="panel-title pull-left">Danie główne</div>
+            <div className="panel-title pull-left">{this.title}</div>
             <div className="panel-title pull-right">
               <input type="button" className="btn btn-sm btn-primary" value="random" onClick={this
                 .selectRandom
@@ -91,9 +89,9 @@ class Menu extends Component {
       )
   }
 
-  getMenu(restaurant) {
+  getList(restaurant) {
 
-    fetch('http://' + process.env.host + '/menu/' + restaurant, {
+    fetch('http://' + process.env.host + this.endpoint + restaurant, {
       credentials: "same-origin",
       headers: {
         'Accept': 'application/json',
@@ -110,7 +108,7 @@ class Menu extends Component {
 
       this
         .props
-        .setMenu(json)
+        .setList(json)
       this.setState({loading: false})
     }).catch((error) => {
       console.log(error)
@@ -120,15 +118,4 @@ class Menu extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-  return {selectedRestaurant: getSelRestaurant(state), selectedMenu: state.selectedMenu, menu: state.menu}
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    selectMenu: selectMenu,
-    setMenu: setMenu
-  }, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default List

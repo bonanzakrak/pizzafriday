@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import Profile from '../containers/profile'
 
 import Restaurants from '../containers/restaurants'
-import Menu from '../containers/menu'
-import Addons from '../containers/addons'
+import Menu from '../containers/home/menu'
+import Addons from '../containers/home/addons'
 import SelectedFood from '../containers/selectedFood'
 import Nav from './nav'
 
