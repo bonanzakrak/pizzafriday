@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Nav from '../nav'
 
-export AdminRestaurants from './restaurants'
-export Admin from './users'
+import AdminRestaurants from './restaurants'
+import Admin from './users'
+
+export {AdminRestaurants, Admin}

@@ -6,6 +6,7 @@ import _sortBy from 'lodash.sortby'
 import Moment from 'moment/moment'
 import {setOrders} from '../actions/index'
 import {bindActionCreators} from 'redux'
+import {getOrders} from '../actions/api'
 
 const Warning = (props) => {
   return (
@@ -22,14 +23,10 @@ class Orders extends Component {
   }
 
   getOrders() {
-    fetch('http://' + process.env.host + '/order', {credentials: "same-origin"}).then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-      throw new Error('Network response was not ok.')
-    }).then((orders) => {
-      //this.setState({orders})
-      this.props.setOrders(orders)
+    getOrders('/order').then((orders) => {
+      this
+        .props
+        .setOrders(orders)
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
@@ -52,33 +49,36 @@ class Orders extends Component {
       return sort
     })
 
-    return this.props.orders.map((order) => {
-      return (
-        <tr key={order._id}>
-          <td>
-            <img src={order.user.image_48} className="rounded"/> {order.user.name}
-          </td>
-          <td>
-            {order.menu && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
-              <i>
-                {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
-              </i>
-              <br/> {order.menu.name}
-            </Warning>}
-          </td>
-          <td>
-            {order.addon && <Warning warn={filter(this.props.availableRestaurants, {_id: order.addon.restaurant}).length}>
-              <i>
-                {filter(this.props.restaurants, {_id: order.addon.restaurant})[0].title}
-              </i>
-              <br/> {order.addon.name}
-            </Warning>}
-          </td>
+    return this
+      .props
+      .orders
+      .map((order) => {
+        return (
+          <tr key={order._id}>
+            <td>
+              <img src={order.user.image_48} className="rounded"/> {order.user.name}
+            </td>
+            <td>
+              {order.menu && <Warning warn={filter(this.props.availableRestaurants, {_id: order.menu.restaurant}).length}>
+                <i>
+                  {filter(this.props.restaurants, {_id: order.menu.restaurant})[0].title}
+                </i>
+                <br/> {order.menu.name}
+              </Warning>}
+            </td>
+            <td>
+              {order.addon && <Warning warn={filter(this.props.availableRestaurants, {_id: order.addon.restaurant}).length}>
+                <i>
+                  {filter(this.props.restaurants, {_id: order.addon.restaurant})[0].title}
+                </i>
+                <br/> {order.addon.name}
+              </Warning>}
+            </td>
 
-          <td>{order.comment}</td>
-        </tr>
-      )
-    })
+            <td>{order.comment}</td>
+          </tr>
+        )
+      })
   }
 
   render() {
@@ -112,11 +112,10 @@ function mapStateToProps(state) {
   return {restaurants: state.restaurants, availableRestaurants: state.availableRestaurants, orders: state.orders}
 }
 
-
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setOrders: setOrders
   }, dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Orders)
+export default connect(mapStateToProps, mapDispatchToProps)(Orders)

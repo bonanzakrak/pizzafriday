@@ -5,14 +5,7 @@ import Nav from './nav'
 import filter from 'lodash.filter'
 import Moment from 'moment/moment'
 import {setGroupedOrders} from '../actions/index'
-
-const Warning = (props) => {
-  return (
-    <div className={(props.warn === 0
-      ? "alert alert-warning"
-      : '')}>{props.children}</div>
-  )
-}
+import {getOrders} from '../actions/api'
 
 class OrdersGrouped extends Component {
   constructor(props) {
@@ -40,9 +33,7 @@ class OrdersGrouped extends Component {
       .groupedOrders
       .map((restaurantOrders) => {
 
-        const restaurantName = filter(this.props.restaurants, {
-          _id: restaurantOrders.restaurant
-        })[0].title
+        const restaurantName = filter(this.props.restaurants, {_id: restaurantOrders.restaurant})[0].title
         return (
           <table className="table table-striped" key={restaurantName}>
             <thead>
@@ -86,12 +77,7 @@ class OrdersGrouped extends Component {
   }
 
   getOrders() {
-    fetch('http://' + process.env.host + '/order/grouped', {credentials: "same-origin"}).then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-      throw new Error('Network response was not ok.')
-    }).then((json) => {
+    getOrders('/order/grouped').then((json) => {
       this
         .props
         .setGroupedOrders(json)

@@ -83,6 +83,14 @@ const _self = {
       console.log('There has been a problem with your fetch operation2: ' + error.message)
       return error
     })
+  },
+  getOrders(endpoint){
+    return fetch('http://' + process.env.host + endpoint, {credentials: "same-origin"}).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    })
   }
 }
 

@@ -12,10 +12,20 @@ class Addons extends Component {
     }
   }
 
+  updateMenu(restaurant) {
+    this.setState({loading: true})
+    this.getAddon(restaurant)
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
-      this.setState({loading: true})
-      this.getAddon(nextProps.selectedRestaurant._id)
+      this.updateMenu(nextProps.selectedRestaurant._id)
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.selectedRestaurant) {
+      this.updateMenu(this.props.selectedRestaurant._id)
     }
   }
 

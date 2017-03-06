@@ -16,11 +16,20 @@ class Menu extends Component {
     }
   }
 
+  updateMenu(restaurant) {
+    this.setState({loading: true})
+    this.getMenu(restaurant)
+  }
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedRestaurant && (!this.props.selectedRestaurant || nextProps.selectedRestaurant._id !== this.props.selectedRestaurant._id)) {
-      this.setState({loading: true})
-      this.getMenu(nextProps.selectedRestaurant._id)
+      this.updateMenu(nextProps.selectedRestaurant._id)
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.selectedRestaurant) {
+      this.updateMenu(this.props.selectedRestaurant._id)
     }
   }
 
@@ -54,7 +63,9 @@ class Menu extends Component {
   render() {
 
     if (!this.props.selectedRestaurant)
-      return (<div></div>)
+      return (
+        <div></div>
+      )
     else if (!this.props.selectedRestaurant || this.state.loading)
       return (
         <div className="panel panel-default">
@@ -108,7 +119,7 @@ class Menu extends Component {
       this
         .props
         .setMenu(json)
-      this.setState({ loading: false})
+      this.setState({loading: false})
     }).catch((error) => {
       console.log(error)
       console.log('There has been a problem with your fetch operation: ' + error.message)
