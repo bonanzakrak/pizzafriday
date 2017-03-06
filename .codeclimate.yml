@@ -3,12 +3,14 @@ engines:
     enabled: true
   duplication:
     enabled: true
-    exclude_fingerprints:
-     - a5b7773894f9d89e6dfe6b4408b3099c
     config:
       languages:
         javascript:
           count_threshold: 3
+    exclude_fingerprints:
+    - a5b7773894f9d89e6dfe6b4408b3099c
+    - 4a8f2f07da9636306cb1b44542aad6d1
+    - 1cb776b7dcbfce3346cb17c4f1850362
   eslint:
     enabled: true
   fixme:
