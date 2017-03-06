@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var webpack2 = require('webpack');
-var watch = require('gulp-watch');
+//var watch = require('gulp-watch');
 var webpackStream = require('webpack-stream');
 var config = require('./webpack.config.js');
 //var minify = require('gulp-minify');
