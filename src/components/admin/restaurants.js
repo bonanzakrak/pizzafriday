@@ -9,7 +9,6 @@ class AdminRestaurants extends Component {
   render() {
     return (
       <div>
-        <Nav/>
         <div>
           <ActiveRestaurants/>
           <ManageRestaurants/>

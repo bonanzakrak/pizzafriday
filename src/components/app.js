@@ -14,10 +14,9 @@ import Login from './login'
 
 import auth from '../actions/auth'
 import Home from './home'
-import Orders from './orders'
+import Orders,{OrdersGrouped, OrdersList} from './orders'
+import Admin, {AdminUsers, AdminRestaurants} from './admin'
 
-import {Admin, AdminRestaurants} from './admin'
-import OrdersGrouped from './ordersGrouped'
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
 
@@ -35,6 +34,16 @@ import filter from 'lodash.filter'
 
 import store from '../store'
 
+class Layout extends Component {
+  render() {
+    return (
+      <div>
+        <Nav logged={true}/> {this.props.children}
+      </div>
+    )
+  }
+}
+
 export class App extends Component {
   constructor(props) {
     super(props)
@@ -45,9 +54,11 @@ export class App extends Component {
     }
   }
 
-  updateFoodProps(food){
+  updateFoodProps(food) {
     if (food.SELECT_MENU) {
-      this.props.selectMenu(food.SELECT_MENU, false)
+      this
+        .props
+        .selectMenu(food.SELECT_MENU, false)
     }
 
     if (food.SELECT_ADDON)
@@ -57,7 +68,7 @@ export class App extends Component {
       this.props.addComment(food.ADD_COMMENT, false)
   }
 
-  updateRestaurantsProps(user){
+  updateRestaurantsProps(user) {
     if (user.restaurants)
       this.props.updateRestaurant(user.restaurants, false)
 
@@ -74,7 +85,9 @@ export class App extends Component {
     this.setState({loaded: true, loggedIn: logged})
 
     if (user) {
-      this.props.updateUser(user.user)
+      this
+        .props
+        .updateUser(user.user)
 
       if (user.food) {
         this.updateFoodProps(user.food)
@@ -89,7 +102,9 @@ export class App extends Component {
   }
 
   componentWillMount() {
-    auth.onChange = this.updateAuth.bind(this)
+    auth.onChange = this
+      .updateAuth
+      .bind(this)
 
     auth.login()
   }
@@ -103,14 +118,24 @@ export class App extends Component {
       return (
         <div>
           <Router key={Math.random()} history={hashHistory}>
-            <Route path='/orders' component={Orders}/>
+            <Route path="/" component={Layout}>
+              <IndexRoute component={Home} logout={this
+                .logout
+                .bind(this)}/>
+              <Route path='orders' component={Orders}>
+                <IndexRoute component={OrdersList} />
+                <Route path='group' component={OrdersGrouped}/>
+              </Route>
 
-            <Route path='/admin' component={Admin}/>
-            <Route path='/admin/restaurants' component={AdminRestaurants}/>
-            <Route path='/admin/users' component={Admin}/>
 
-            <Route path='/group' component={OrdersGrouped}/>
-            <Route path='*' component={Home} logout={this.logout.bind(this)}/>
+              <Route path='admin' component={Admin}>
+                <Route path='restaurants' component={AdminRestaurants}/>
+                <Route path='users' component={AdminUsers}/>
+              </Route>
+
+
+
+            </Route>
           </Router>
           <Notify/>
         </div>
@@ -118,7 +143,7 @@ export class App extends Component {
     } else
       return (
         <div>
-          <Nav/>
+          <Nav logged={false}/>
           <Login/>
         </div>
       )

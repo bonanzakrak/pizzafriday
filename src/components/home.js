@@ -15,7 +15,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Nav/>
+        
         <div className="row">
           <div className=" col-md-4">
             <Profile logout={this.props.route.logout}/>

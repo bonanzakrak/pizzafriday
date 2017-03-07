@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import Nav from './nav'
+
 import filter from 'lodash.filter'
-import Moment from 'moment/moment'
-import {setGroupedOrders} from '../actions/index'
-import {getOrders} from '../actions/api'
+
+import {setGroupedOrders} from '../../actions/index'
+import {getOrders} from '../../actions/api'
 
 class OrdersGrouped extends Component {
   constructor(props) {
@@ -16,13 +16,7 @@ class OrdersGrouped extends Component {
   render() {
     return (
       <div>
-        <Nav/>
-        <div className="panel panel-default">
-          <div className="panel-heading">Orders List {Moment().format('YYYY-MM-DD')}</div>
-          <div className="panel-body">
-            {this.renderRestaurants()}
-          </div>
-        </div>
+        {this.renderRestaurants()}
       </div>
     )
   }

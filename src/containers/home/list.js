@@ -66,7 +66,7 @@ class List extends Component {
       )
     else if (!this.props.selectedRestaurant || this.state.loading)
       return (
-        <Loading text="{this.title}" />
+        <Loading text={this.title} />
       )
     else
       return (
@@ -111,7 +111,7 @@ class List extends Component {
         .setList(json)
       this.setState({loading: false})
     }).catch((error) => {
-      
+
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }

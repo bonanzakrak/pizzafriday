@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Nav from './nav'
+
 import filter from 'lodash.filter'
 import _sortBy from 'lodash.sortby'
-import Moment from 'moment/moment'
-import {setOrders} from '../actions/index'
+import {setOrders} from '../../actions/index'
 import {bindActionCreators} from 'redux'
-import {getOrders} from '../actions/api'
+import {getOrders} from '../../actions/api'
 
 const Warning = (props) => {
   return (
@@ -77,27 +76,19 @@ class Orders extends Component {
 
   render() {
     return (
-      <div>
-        <Nav/>
-        <div className="panel panel-default">
-          <div className="panel-heading">Orders List {Moment().format('YYYY-MM-DD')}</div>
-          <div className="panel-body">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th className="col-md-3">Who</th>
-                  <th className="col-md-3">Danie główne</th>
-                  <th className="col-md-3">Dodatki</th>
-                  <th className="col-md-3">Komentarz</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.renderList()}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th className="col-md-3">Who</th>
+            <th className="col-md-3">Danie główne</th>
+            <th className="col-md-3">Dodatki</th>
+            <th className="col-md-3">Komentarz</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderList()}
+        </tbody>
+      </table>
     )
   }
 }

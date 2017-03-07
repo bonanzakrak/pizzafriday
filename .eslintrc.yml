@@ -4,6 +4,9 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 
+plugins:
+  - react
+
 env:
   amd: true
   browser: true
@@ -51,7 +54,7 @@ rules:
 
   # Best Practices
   accessor-pairs: error
-  array-callback-return: off
+  array-callback-return: warn
   block-scoped-var: off
   class-methods-use-this: off
   complexity:
@@ -275,3 +278,7 @@ rules:
   symbol-description: off
   template-curly-spacing: off
   yield-star-spacing: off
+
+  # React
+  react/display-name: warn
+  react/no-array-index-key: warn
