@@ -7,6 +7,12 @@ class Nav extends Component {
       return(
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">
+            {this.props.admin &&
+              <li>
+                <Link to="/admin">Admin</Link>
+              </li>
+            }
+
             <li>
               <Link to="/orders/group">Grouped list</Link>
             </li>

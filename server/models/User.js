@@ -12,5 +12,9 @@ module.exports = new Schema({
     type: String
   },
   image_48: String,
-  image_72: String
+  image_72: String,
+  admin: {
+    type: Boolean,
+    default: false
+  }
 })
