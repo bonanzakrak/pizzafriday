@@ -31,6 +31,18 @@ const _self = {
       })
     }
   },
+  requireAdmin(user) {
+    return (nextState, replace) => {
+      if (!user.admin) {
+        replace({
+          pathname: '/',
+          state: {
+            nextPathname: nextState.location.pathname
+          }
+        })
+      }
+    }
+  },
   logout(cb) {
     cookie.remove('JWToken')
     cb()

@@ -8,12 +8,12 @@ import ActiveRestaurants from '../../containers/restaurants/active'
 class AdminRestaurants extends Component {
   render() {
     return (
+
       <div>
-        <div>
-          <ActiveRestaurants/>
-          <ManageRestaurants/>
-        </div>
+        <ActiveRestaurants/>
+        <ManageRestaurants/>
       </div>
+
     )
   }
 }

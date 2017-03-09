@@ -38,7 +38,7 @@ class Layout extends Component {
   render() {
     return (
       <div>
-        <Nav logged={true}/> {this.props.children}
+        <Nav logged={true} admin={this.props.route.admin}/> {this.props.children}
       </div>
     )
   }
@@ -52,6 +52,10 @@ export class App extends Component {
       loggedIn: false,
       loaded: false
     }
+  }
+
+  componentWillMount(){
+    console.log('mount')
   }
 
   updateFoodProps(food) {
@@ -82,8 +86,6 @@ export class App extends Component {
   }
 
   updateAuth(logged, user) {
-    this.setState({loaded: true, loggedIn: logged})
-
     if (user) {
       this
         .props
@@ -95,6 +97,7 @@ export class App extends Component {
 
       this.updateRestaurantsProps(user)
     }
+    this.setState({loaded: true, loggedIn: logged})
   }
 
   logout() {
@@ -117,8 +120,8 @@ export class App extends Component {
     else if (this.state.loggedIn) {
       return (
         <div>
-          <Router key={Math.random()} history={hashHistory}>
-            <Route path="/" component={Layout}>
+          <Router key={Math.random()} history={browserHistory}>
+            <Route path="/" component={Layout} admin={this.props.user.admin} onEnter={auth.requireAuth}>
               <IndexRoute component={Home} logout={this
                 .logout
                 .bind(this)}/>
@@ -127,14 +130,10 @@ export class App extends Component {
                 <Route path='group' component={OrdersGrouped}/>
               </Route>
 
-
-              <Route path='admin' component={Admin}>
+              <Route path='admin' component={Admin} >
                 <Route path='restaurants' component={AdminRestaurants}/>
                 <Route path='users' component={AdminUsers}/>
               </Route>
-
-
-
             </Route>
           </Router>
           <Notify/>
@@ -151,7 +150,7 @@ export class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {}
+  return {user:state.user}
 }
 
 const mapDispatchToProps = (dispatch) => {
