@@ -1,7 +1,7 @@
 import DevTools from './containers/DevTools'
 import reducers from './reducers'
 import { createStore, applyMiddleware,compose } from 'redux'
-import {debounceMiddleware} from 'redux-middleware-debounce'
+
 import thunk from 'redux-thunk'
 
 const enhancer = compose(

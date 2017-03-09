@@ -16,6 +16,4 @@ router.get('/callback', passport.authenticate('oauth2', {failureRedirect: '/#/fa
   res.redirect('/#/')
 })
 
-
-
 module.exports = router

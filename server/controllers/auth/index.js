@@ -26,15 +26,12 @@ router.get('/session', passport.authenticate('jwt', {session: false}), (req, res
 })
 
 router.post('/user', (req, res) => {
-
   db
     .upsertUser(req.body, function(error, user) {
       res.json(jwt.sign({
         id: user
       }, process.env.ENV_SECRET))
     })
-
-  /**/
 })
 
 module.exports = router
