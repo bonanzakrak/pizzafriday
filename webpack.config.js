@@ -1,11 +1,11 @@
 var webpack = require('webpack');
+var path = require('path');
 //var path = require('path');
 //var npmPath = path.resolve(__dirname, '../node_modules');
 module.exports = {
   entry: ['./src/index.js'],
   output: {
-    path: __dirname,
-    publicPath: 'server/dist/',
+    path: path.resolve(__dirname, 'server/dist'),
     filename: 'bundle.js'
   },
 
@@ -27,7 +27,7 @@ module.exports = {
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.DefinePlugin({
       "process.env": {
-        HOST: JSON.stringify(process.env.HOST || 'localhost')
+        HOST: JSON.stringify(process.env.HOST || 'localhost:1337')
       }
     })
   ],
