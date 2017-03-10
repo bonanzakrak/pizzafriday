@@ -22,7 +22,7 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-     
+
       console.log('There has been a problem with your fetch operation0: ' + error.message)
     })
   },
@@ -98,6 +98,18 @@ const _self = {
       callback(orders)
     }).catch((error) => {
 
+      console.log('There has been a problem with your fetch operation: ' + error.message)
+    })
+  },
+  getUsers(endpoint, callback) {
+    return fetch('http://' + process.env.host + '/users', {credentials: "same-origin"}).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then((orders) => {
+      callback(orders)
+    }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
   }
