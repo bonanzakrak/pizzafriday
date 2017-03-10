@@ -11,15 +11,15 @@ let restaurants = [
 ]
 
 before(function(done) {
-
+//REFACTOR: make it smarter
   getToken()
     .then(function(serverToken) {
       // global.document.cookie = "JWT=" + res.body
       cleanup().then(setupRestaurants(function() {
         done()
-      })).catch(error => console.log(error))
+      })).catch(error => done(error))
     })
-    .catch(function(error) {})
+    .catch(function(error) {done(error)})
 
 })
 
@@ -39,7 +39,7 @@ const setupRestaurants = (done) => {
           restaurant._id = result._id;
           cb()
         })
-        .catch(error => console.log(error))
+        .catch(error => done(error))
 
     }, done)
 
