@@ -6,6 +6,7 @@ var config = require('./webpack.config.js');
 //var minify = require('gulp-minify');
 
 gulp.task('react', function() {
+  //console.log(process.env)
   return gulp.src('src/index.js')
     .pipe(webpackStream(config ,webpack2))
     //.pipe(minify())

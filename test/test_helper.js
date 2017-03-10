@@ -1,4 +1,4 @@
-process.env.host = '127.0.0.1:1337'
+process.env.HOST = '127.0.0.1:1337'
 process.env.PORT = '1337'
 process.env.ENV_SECRET = 'test_secret'
 process.env.NODE_ENV = "TESTING"
@@ -49,7 +49,7 @@ let user = {
 
 function getToken() {
   return chai
-    .request(process.env.host)
+    .request(process.env.HOST)
     .post('/auth/user')
     .send(user)
 }

@@ -91,7 +91,7 @@ class List extends Component {
 
   getList(restaurant) {
 
-    fetch('http://' + process.env.host + this.endpoint + restaurant, {
+    fetch('http://' + process.env.HOST + this.endpoint + restaurant, {
       credentials: "same-origin",
       headers: {
         'Accept': 'application/json',

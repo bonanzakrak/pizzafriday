@@ -57,7 +57,7 @@ describe('asyncronous action creators', () => {
 
       const save = true
 
-      nock('http://' + process.env.host)
+      nock('http://' + process.env.HOST)
         .post(action.apiEndpoint)
         .reply(200, {body: restaurant})
       const myStore = mockStore({}, expectedActions, tests, done)
@@ -109,7 +109,7 @@ describe('asyncronous action creators', () => {
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
-      nock('http://' + process.env.host)
+      nock('http://' + process.env.HOST)
         .post(action.apiEndpoint)
         .reply(200, {body: menu})
       const myStore = mockStore({}, expectedActions, tests, done)
@@ -159,7 +159,7 @@ describe('asyncronous action creators', () => {
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
-      nock('http://' + process.env.host)
+      nock('http://' + process.env.HOST)
         .post(action.apiEndpoint)
         .reply(200, {body: addon})
       const myStore = mockStore({}, expectedActions, tests, done)
@@ -203,7 +203,7 @@ describe('asyncronous action creators', () => {
     const tests = [simpleActionTest, notificationTest]
     const save = true
 
-    nock('http://' + process.env.host)
+    nock('http://' + process.env.HOST)
       .post(action.apiEndpoint)
       .reply(200, {body: ''})
     const myStore = mockStore({}, expectedActions, tests, done)
@@ -234,7 +234,7 @@ describe('asyncronous action creators', () => {
       const tests = [simpleActionTest, notificationTest]
       const save = true
 
-      nock('http://' + process.env.host)
+      nock('http://' + process.env.HOST)
         .post(action.apiEndpoint)
         .reply(200, {body: ''})
       const myStore = mockStore({}, expectedActions, tests, done)

@@ -7,7 +7,7 @@ let debouncers = {}
 const _self = {
 
   auth(cb) {
-    fetch('http://' + process.env.host + '/auth/session', {
+    fetch('http://' + process.env.HOST + '/auth/session', {
       credentials: "same-origin",
       headers: {
         'Authorization': `JWT ${cookie.load('JWToken')}`
@@ -27,7 +27,7 @@ const _self = {
     })
   },
   saveRestaurants(action, cb) {
-    fetch('http://' + process.env.host + '/restaurant/active', {
+    fetch('http://' + process.env.HOST + '/restaurant/active', {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(_map(action, '_id')),
@@ -66,7 +66,7 @@ const _self = {
     return debouncer
   },
   saveSelectionFull(action, cb) {
-    return fetch('http://' + process.env.host + action.apiEndpoint, {
+    return fetch('http://' + process.env.HOST + action.apiEndpoint, {
       credentials: "same-origin",
       method: 'POST',
       body: JSON.stringify(action),
@@ -88,7 +88,7 @@ const _self = {
     })
   },
   getOrders(endpoint, callback) {
-    return fetch('http://' + process.env.host + endpoint, {credentials: "same-origin"}).then((response) => {
+    return fetch('http://' + process.env.HOST + endpoint, {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }

@@ -9,6 +9,14 @@ Allow to select food from restaurants on pizza day.
 ### Instalation
 ```npm install```
 
+
+### Envoirment variables
+
+HOST - server host
+PORT - server listener port
+ENV_SECRET - secret for JWT
+NODE_ENV - envoirment (production, TESTING)
+
 ### Start
 ```npm run start```
 

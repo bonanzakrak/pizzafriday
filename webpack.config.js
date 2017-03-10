@@ -5,7 +5,7 @@ module.exports = {
   entry: ['./src/index.js'],
   output: {
     path: __dirname,
-    publicPath: '/',
+    publicPath: 'server/dist/',
     filename: 'bundle.js'
   },
 
@@ -27,7 +27,7 @@ module.exports = {
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.DefinePlugin({
       "process.env": {
-        host: JSON.stringify(process.env.HOST || 'localhost')
+        HOST: JSON.stringify(process.env.HOST || 'localhost')
       }
     })
   ],
