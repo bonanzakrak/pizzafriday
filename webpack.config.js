@@ -27,7 +27,7 @@ module.exports = {
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.DefinePlugin({
       "process.env": {
-        HOST: JSON.stringify(process.env.HOST || 'localhost')
+        HOST: JSON.stringify(process.env.HOST || 'localhost:1337')
       }
     })
   ],
