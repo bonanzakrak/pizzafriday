@@ -6,7 +6,7 @@ const request = require('request')
 const db = require('./db')
 
 passport.serializeUser(db.upsertUser)
-
+passport.deserializeUser(db.getUser)
 passport.use(new OAuth2Strategy({
   authorizationURL: 'https://slack.com/oauth/authorize',
   tokenURL: 'https://slack.com/api/oauth.access',

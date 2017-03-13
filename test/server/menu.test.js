@@ -17,7 +17,7 @@ describe('Get menu data from API', function() {
   });
 
   it('Should block request without JWT', function(done) {
-    chai.request(process.env.host).get('/menu').end((err, res) => {
+    chai.request(process.env.HOST).get('/menu').end((err, res) => {
       res.should.have.status(401)
 
       done()
@@ -25,7 +25,7 @@ describe('Get menu data from API', function() {
   })
 
   it('Should block request with invalid JWT', function(done) {
-    chai.request(process.env.host).get('/menu').set('Authorization', 'JWT invalidToken').end((err, res) => {
+    chai.request(process.env.HOST).get('/menu').set('Authorization', 'JWT invalidToken').end((err, res) => {
       res.should.have.status(401)
 
       done()
@@ -43,7 +43,7 @@ describe('Get menu data from API', function() {
     })
 
     it('returning all elements', function(done) {
-      chai.request(process.env.host).get('/menu').set('Authorization', 'JWT ' + token).end((err, res) => {
+      chai.request(process.env.HOST).get('/menu').set('Authorization', 'JWT ' + token).end((err, res) => {
         res.should.have.status(200)
         res.body.should.be.a('array')
         res.body.should.be.lengthOf(menu.length)
@@ -54,7 +54,7 @@ describe('Get menu data from API', function() {
 
     setup.restaurants.forEach(function(restaurant) {
       it('returning menu for restaurant ' + restaurant.title, function(done) {
-        chai.request(process.env.host).get('/menu/' + restaurant._id).set('Authorization', 'JWT ' + token).end((err, res) => {
+        chai.request(process.env.HOST).get('/menu/' + restaurant._id).set('Authorization', 'JWT ' + token).end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.should.be.lengthOf(0) // will be changed when created menu in setup
@@ -65,7 +65,7 @@ describe('Get menu data from API', function() {
     })
 
     it('for non existing restaurant', function(done) {
-      chai.request(process.env.host).get('/menu/' + mongoose.Types.ObjectId()).set('Authorization', 'JWT ' + token).end((err, res) => {
+      chai.request(process.env.HOST).get('/menu/' + mongoose.Types.ObjectId()).set('Authorization', 'JWT ' + token).end((err, res) => {
         res.should.have.status(200)
         res.body.should.be.a('array')
         res.body.should.be.lengthOf(0)
@@ -75,7 +75,7 @@ describe('Get menu data from API', function() {
     })
 
     it('status 500 for invalid restaurant id', function(done) {
-      chai.request(process.env.host).get('/menu/undefined').set('Authorization', 'JWT ' + token).end((err, res) => {
+      chai.request(process.env.HOST).get('/menu/undefined').set('Authorization', 'JWT ' + token).end((err, res) => {
         res.should.have.status(500)
         res.text.should.have.string('restaurant is not valid ObjectId')
 

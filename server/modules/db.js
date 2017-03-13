@@ -8,11 +8,13 @@ module.exports = {
       .User
       .findOneAndUpdate({
         id: user.id
-      }, user, {upsert: true})
+      }, {$set:user}, {upsert: true})
       .then((result) => {
         return cb(null, result.id)
       })
-      .catch((error) => cb(error, null))
+      .catch((error) => {
+        cb(error, null)
+      })
   },
   getUser: (payload, cb) => {
     //this is from passport - required CB
