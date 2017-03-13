@@ -10,15 +10,21 @@ Allow to select food from restaurants on pizza day.
 ```npm install```
 
 
-### Envoirment variables
+### Environment variables
 
-HOST - server host
-PORT - server listener port
+HOST - server host and port, defaults to localhost:1337
+PORT - server port, appears to be unused
 ENV_SECRET - secret for JWT
 NODE_ENV - envoirment (production, TESTING)
 
 ### Start
+```gulp react```
+
 ```npm run start```
+
+### Development
+```gulp watch```
+```npm run watch```
 
 ### Todo
 - ~~move restaurants list to db~~
