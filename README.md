@@ -7,30 +7,29 @@ Allow to select food from restaurants on pizza day.
 - node
 
 ### Instalation
-```npm install```
-
+```npm install```  
+```cp server/config.example.js server/config.js```
 
 ### Environment variables
 
-HOST - server host and port, defaults to localhost:1337
-PORT - server port, appears to be unused
-ENV_SECRET - secret for JWT
+HOST - server host, defaults to localhost  
+PORT - server port, defaults to 1337  
+ENV_SECRET - secret for JWT  
 NODE_ENV - envoirment (production, TESTING)
 
 ### Start
-```gulp react```
-
+```gulp react```  
 ```npm run start```
 
 ### Development
-```gulp watch```
-```npm run watch```
+```gulp watch```  
+```npm run start:watch```
 
 ### Todo
 - ~~move restaurants list to db~~
 - ~~move menu to db~~
 - create menu editor for admin
-- levels of auth
+- ~~levels of auth~~
 - users list for admin
 - ~~change ```monk``` to something smarter~~ (changed to mongoose)
 
