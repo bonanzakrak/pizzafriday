@@ -14,7 +14,7 @@ import Login from './login'
 
 import auth from '../actions/auth'
 import Home from './home'
-import Orders,{OrdersGrouped, OrdersList} from './orders'
+import Orders, {OrdersGrouped, OrdersList} from './orders'
 import Admin, {AdminUsers, AdminRestaurants} from './admin'
 
 import {updateUser} from '../actions/index'
@@ -52,10 +52,6 @@ export class App extends Component {
       loggedIn: false,
       loaded: false
     }
-  }
-
-  componentWillMount(){
-    console.log('mount')
   }
 
   updateFoodProps(food) {
@@ -124,15 +120,16 @@ export class App extends Component {
             <Route path="/" component={Layout} admin={this.props.user.admin} onEnter={auth.requireAuth}>
               <IndexRoute component={Home} logout={this
                 .logout
-                .bind(this)}/>
+                .bind(this)} />
               <Route path='orders' component={Orders}>
-                <IndexRoute component={OrdersList} />
+                <IndexRoute component={OrdersList}/>
                 <Route path='group' component={OrdersGrouped}/>
               </Route>
 
-              <Route path='admin' component={Admin} >
+              <Route path='admin' component={Admin} onEnter={auth.requireAdmin(this.props.user)}>
                 <Route path='restaurants' component={AdminRestaurants}/>
                 <Route path='users' component={AdminUsers}/>
+
               </Route>
             </Route>
           </Router>
@@ -150,7 +147,7 @@ export class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {user:state.user}
+  return {user: state.user}
 }
 
 const mapDispatchToProps = (dispatch) => {

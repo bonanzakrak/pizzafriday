@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/app.js",
-    "start:watch": "nodemon --watch server/app.js --watch server/modules --watch server/controllers --watch server/middlewares  server/app.js",
+    "start:watch": "nodemon",
     "test": "mocha -r mock-local-storage --require mocha-clean --compilers js:babel-core/register,json:json-loader --require ./test/test_helper.js --recursive ./test test/setup.js --timeout 3000",
     "test:watch": "npm run test -- --watch",
     "coverage": "node_modules/.bin/nyc --require babel-core/register mocha test/setup.js test/**/*.js",

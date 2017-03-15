@@ -3,6 +3,7 @@ import Nav from '../nav'
 
 import AdminRestaurants from './restaurants'
 import AdminUsers from './users'
+
 import {Router, Route, Link, IndexRoute} from 'react-router'
 
 export default class Admin extends Component {

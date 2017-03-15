@@ -39,10 +39,10 @@ Testing code review tools
 
 |                  |        **master**         |       **develop**       |
 | ---------------: | :-----------------------: | :---------------------: |
-|     **Travis**   |     [![Master][1]][2]     |                         |
-|   **Codacy**     |    [![Codacy][3]][4]      |                         |
+|    **Travis**    |     [![Travis][1]][2]     |                         |
+|    **Codacy**    |     [![Codacy][3]][4]     |                         |
 | **Code Climate** |  [![Code Climate][5]][6]  |                         |
-| **Codefactor**   |  [![Codefactor][7]][8]    |         soon            |
+|  **Codefactor**  |   [![Codefactor][7]][8]   |         soon            |
 
 [1]: https://travis-ci.org/bonanzakrak/pizzafriday.svg?branch=master
 [2]: https://travis-ci.org/bonanzakrak/pizzafriday

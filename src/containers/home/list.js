@@ -99,7 +99,6 @@ class List extends Component {
         'Authorization': `JWT ${this.state.jwt}`
       }
     }).then((response) => {
-      //console.log(response)
       if (response.ok) {
         return response.json()
       }

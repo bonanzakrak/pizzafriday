@@ -30,7 +30,6 @@ function _isResWritable() {
 
 function load(name, doNotParse) {
   var cookies = IS_NODE ? _rawCookie : _cookie2.default.parse(document.cookie);
-  //console.log(cookies)
   var cookieVal = cookies && cookies[name];
 
   if (typeof doNotParse === 'undefined') {
