@@ -10,7 +10,7 @@ module.exports = {
         id: user.id
       }, {$set:user}, {upsert: true})
       .then((result) => {
-        return cb(null, result.id)
+        return cb(null, user.id)
       })
       .catch((error) => {
         cb(error, null)

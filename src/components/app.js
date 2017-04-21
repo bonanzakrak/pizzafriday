@@ -72,8 +72,8 @@ export class App extends Component {
     if (user.restaurants)
       this.props.updateRestaurant(user.restaurants, false)
 
-    if (user.food && user.food.SELECT_MENU && filter(user.activeRestaurants.restaurants, {id: user.food.SELECT_MENU.restaurant}).length)
-      this.props.selectRestaurant(filter(this.props.restaurants, {id: user.food.SELECT_MENU.restaurant})[0])
+    if (user.food && user.food.SELECT_MENU && filter(user.activeRestaurants.restaurants, {_id: user.food.SELECT_MENU.restaurant}).length)
+      this.props.selectRestaurant(filter(user.restaurants, {_id: user.food.SELECT_MENU.restaurant})[0])
     else if (user.activeRestaurants.restaurants.length > 0)
       this.props.selectRestaurant(user.activeRestaurants.restaurants[0])
 
