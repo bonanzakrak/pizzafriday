@@ -1,0 +1,11 @@
+{
+    
+    "ignore": [".git", "dist/*", "style/*"],
+    "watch": ["server/*"],
+    "env": {
+        "NODE_ENV": "TESTING"
+    },
+    "execMap": {
+        "js": "node server/app.js"
+    }
+}

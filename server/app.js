@@ -29,6 +29,13 @@ app.set('views', path.join(__dirname, '/views'))
 
 app.use(require('./middlewares/db.js'))
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // routing
 app.use('/',require('./controllers'))
 app.use(require('./middlewares/error.js'))

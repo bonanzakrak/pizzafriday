@@ -22,7 +22,6 @@ const _self = {
     }).then((response) => {
       cb(response)
     }).catch((error) => {
-
       console.log('There has been a problem with your fetch operation0: ' + error.message)
     })
   },
@@ -102,7 +101,7 @@ const _self = {
     })
   },
   getUsers(callback) {
-    return fetch('http://' + process.env.HOST + '/users', {credentials: "same-origin"}).then((response) => {
+    return fetch(`${baseURL()}/users`, {credentials: "same-origin"}).then((response) => {
       if (response.ok) {
         return response.json()
       }
@@ -112,6 +111,48 @@ const _self = {
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message)
     })
+  },
+  getUser(user, callback) {
+    return fetch(`${baseURL()}/users/${user}`, {credentials: "same-origin"}).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then((orders) => {
+      callback(orders)
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation: ' + error.message)
+    })
+  },
+  setUserProvilages(id, admin, cb) {
+    const func = (id, admin, cb) => {
+      return _self.setUserProvilagesApi(id, admin, cb)
+    }
+    return _self.getDebouncer('setUserProvilages' + id, 1000, func)(id, admin, cb)
+
+  },
+  setUserProvilagesApi(id, admin, cb){
+    return fetch(`${baseURL()}/users`, {
+      credentials: "same-origin",
+      method: 'POST',
+      body: JSON.stringify({user:id, admin:admin}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `JWT ${cookie.load('JWToken')}`
+      }
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    }).then((response) => {
+      cb(true,response)
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation2: ' + error.message)
+      return error
+    })
+
   }
 }
 
