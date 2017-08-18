@@ -17,16 +17,19 @@ class Restaurants extends Component {
         let attributes = {}
         const isDisabled = filter(this.props.availableRestaurants, {_id: restaurant._id}).length === 0
 
-        if (isDisabled)
-          attributes.className = 'disabled'
-        else if (this.props.reSelectedRestaurant && restaurant.title === this.props.reSelectedRestaurant.title)
+        //if (isDisabled)
+         // attributes.className = 'disabled'
+        if (this.props.reSelectedRestaurant && restaurant.title === this.props.reSelectedRestaurant.title)
           attributes.className = 'active'
 
-        return (
-          <li {...attributes} key={restaurant.title} role="navigation" onClick={() => this.props.selectRestaurant(restaurant, isDisabled)}>
-            <a>{restaurant.title}</a>
-          </li>
-        )
+        if(isDisabled)
+          return ''
+        else
+          return (
+            <li {...attributes} key={restaurant.title} role="navigation" onClick={() => this.props.selectRestaurant(restaurant, isDisabled)}>
+              <a>{restaurant.title}</a>
+            </li>
+          )
       })
   }
 

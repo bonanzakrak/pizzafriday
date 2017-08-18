@@ -15,7 +15,7 @@ import Login from './login'
 import auth from '../actions/auth'
 import Home from './home'
 import Orders, {OrdersGrouped, OrdersList} from './orders'
-import Admin, {AdminUsers, AdminRestaurants} from './admin'
+import Admin, {AdminUsers, AdminRestaurants,AdminMenu} from './admin'
 
 import {updateUser} from '../actions/index'
 import {bindActionCreators} from 'redux'
@@ -128,8 +128,8 @@ export class App extends Component {
 
               <Route path='admin' component={Admin} onEnter={auth.requireAdmin(this.props.user)}>
                 <Route path='restaurants' component={AdminRestaurants}/>
+                <Route path='menu/:restaurant' component={AdminMenu}/>
                 <Route path='users' component={AdminUsers}/>
-
               </Route>
             </Route>
           </Router>

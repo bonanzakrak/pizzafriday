@@ -8,5 +8,6 @@ module.exports = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Restaurant'
   },
-  price: Number
+  price: Number,
+  idx: Number
 })

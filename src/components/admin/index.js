@@ -3,7 +3,7 @@ import Nav from '../nav'
 
 import AdminRestaurants from './restaurants'
 import AdminUsers from './users'
-
+import AdminMenu from './menu'
 import {Router, Route, Link, IndexRoute} from 'react-router'
 
 export default class Admin extends Component {
@@ -46,7 +46,7 @@ export default class Admin extends Component {
             {this.renderMenu()}
           </ul>
         </nav>
-
+        
         {this.props.children
           ? this.props.children
             : <div className="panel panel-default">
@@ -61,4 +61,4 @@ export default class Admin extends Component {
   }
 }
 
-export {AdminRestaurants, AdminUsers}
+export {AdminRestaurants, AdminUsers, AdminMenu}
