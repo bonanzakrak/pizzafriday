@@ -18,4 +18,4 @@ module.exports = function db (req, res, next) {
   return next()
 }
 
-mongoose.connect(config.db)
+mongoose.connect(config.db,{useMongoClient:true})

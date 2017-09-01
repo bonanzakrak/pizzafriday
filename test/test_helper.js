@@ -5,7 +5,7 @@ process.env.NODE_ENV = "TESTING"
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
+//import TestUtils from 'react-addons-test-utils';
 import jsdom from 'jsdom';
 
 import chai, {expect} from 'chai';
