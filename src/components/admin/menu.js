@@ -11,6 +11,9 @@ import {
 } from 'react-router'
 import filter from 'lodash.filter'
 import cookie from '../../selectors/cookie'
+import {
+  addMenuItem
+} from '../../actions/api'
 
 export default class AdminMenu extends Component {
   constructor(props) {
@@ -24,12 +27,27 @@ export default class AdminMenu extends Component {
   }
 
   handleUpdate(idx) {
-    console.log(idx)
     this.saveMenu(this.state.menu[idx])
   }
 
   handleRemove(idx) {
-    console.log(idx)
+    //console.log()
+    let menu = this.state.menu.slice()
+    this.removeMenuItem(menu[idx]);
+
+    menu.splice(idx, 1)
+
+    menu = menu.map((item, index) => {
+      if (idx < index)
+        item.idx -= 1
+      return item
+    });
+
+    this.setState({
+      menu
+    })
+
+    this.saveOrder();
   }
 
   moveUp(idx) {
@@ -53,6 +71,10 @@ export default class AdminMenu extends Component {
   }
 
   handleChange(field, idx, event) {
+    if (field === 'price')
+      if (Number.isNaN(parseInt(event.target.value)))
+        return false
+
     let menu = this.state.menu.slice()
     menu[idx][field] = event.target.value
     this.setState({
@@ -80,50 +102,96 @@ export default class AdminMenu extends Component {
         // this looks like shit
         return (
           <div key={item._id}>
-            <div className="form-group">
-              <input type="text" name="name" value={item.name} onChange={this.handleChange.bind(this,'name',idx)}></input>
-              <input type="text" name="altName" value={item.altName ? item.altName : ''} onChange={this.handleChange.bind(this,'altName',idx)}></input>
-              <input type="text" name="price" value={item.price} onChange={this.handleChange.bind(this,'price',idx)}></input>
+            <div className="row">
+              <div className="form-group col-sm-3">
+
+                <input type="text" className="form-control" name="name" value={item.name} onChange={this.handleChange.bind(this,'name',idx)}></input>
+              </div>
+              <div className="form-group col-sm-3">
+                <input type="text" className="form-control" name="altName" value={item.altName ? item.altName : ''} onChange={this.handleChange.bind(this,'altName',idx)}></input>
+              </div>
+              <div className="form-group col-sm-2">
+                <input type="number" className="form-control" step="1" name="price" value={item.price} onChange={this.handleChange.bind(this,'price',idx)}></input>
+              </div>
+
               <input type="hidden" name="idx" value={idx} onChange={()=>{}}></input>
               <input type="hidden" name="_id" defaultValue={item._id}></input>
-              <input type="button" onClick={() => this.handleUpdate(idx)} value="update"></input>
-              <input type="button" onClick={() => this.handleRemove(idx)} value="remove"></input>
-              {idx > 0 &&
-                <input type="button" onClick={() => this.moveUp(idx)} value="moveUp"></input>
-              }
-              {idx < this.state.menu.length-1 &&
-                <input type="button" onClick={() => this.moveDown(idx)} value="moveDown"></input>
-              }
+              <div className="form-group col-sm-4">
+                <input type="button" onClick={() => this.handleUpdate(idx)} value="update"  className="btn"></input> &nbsp;
+                <input type="button" onClick={() => this.handleRemove(idx)} value="remove"  className="btn"></input> &nbsp;
+                {idx > 0 &&
+                  <input type="button" onClick={() => this.moveUp(idx)} value="&#9650;"  className="btn"></input>
+                }
+                 &nbsp;
+                {idx < this.state.menu.length-1 &&
+                  <input type="button" onClick={() => this.moveDown(idx)} value="&#9660;"  className="btn"></input>
+                }
+              </div>
             </div>
           </div>
         )
       })
   }
 
+  submit(event) {
+    event.preventDefault()
+    const name = event.target.name.value
+    const altName = event.target.altName.value
+    const price = parseInt(event.target.price.value)
+
+    const $this = this
+
+    if (!Number.isNaN(price) && name.length > 0) {
+      addMenuItem(name, altName, price, $this.props.params.restaurant, function (e, s) {
+        if (e) {
+          let menu = $this.state.menu.slice()
+          menu.push(s)
+          $this.setState({
+            menu
+          })
+        }
+      })
+    } else {
+      alert('NaN')
+    }
+  }
+
   renderAdd() {
     return (
-      <div>
+      <div className="row">
         <div className="form-group">
-          <input type="text" name="name"></input>
-          <input type="text" name="altName"></input>
-          <input type="text" name="price"></input>
-
-          <input type="button" onClick={() => this.handleAdd(idx)} value="add"></input>
-
+          <form onSubmit={this
+            .submit
+            .bind(this)}>
+            <div className="form-group col-sm-3">
+              <input type="text" name="name"  className="form-control" placeholder="Name"></input>
+            </div>
+            <div className="form-group col-sm-3">
+              <input type="text" name="altName" className="form-control" placeholder="Alt name"></input>
+            </div>
+            <div className="form-group col-sm-2">
+              <input type="number" step="1" name="price" className="form-control" placeholder="price"></input>
+            </div>
+            <div className="form-group col-sm-4">
+              <input type="submit" value="add" className="btn"></input>
+            </div>
+          </form>
         </div>
       </div>
     )
   }
 
+
+  /* onHide={closeModal} */
   render() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">Menu</div>
-        <ul className="">
+        <div className="panel-body">
           {this.renderList()}
-        </ul>
-        {this.renderAdd()}
-
+          <hr />
+          {this.renderAdd()}
+        </div>
       </div>
     )
   }
@@ -136,7 +204,6 @@ export default class AdminMenu extends Component {
   }
 
   getList(restaurant) {
-
     fetch('http://' + process.env.HOST + this.endpoint + restaurant, {
         credentials: "same-origin",
         headers: {
@@ -170,7 +237,6 @@ export default class AdminMenu extends Component {
   }
 
   saveMenu(item, cb) {
-    console.log(`${process.env.HOST}/menu/${item._id}`)
     fetch(`http://${process.env.HOST}/menu/${item._id}`, {
         credentials: "same-origin",
         method: 'POST',
@@ -198,7 +264,6 @@ export default class AdminMenu extends Component {
   }
 
   postOrder(items, cb) {
-
     fetch(`http://${process.env.HOST}/menu/order`, {
         credentials: "same-origin",
         method: 'POST',
@@ -210,9 +275,8 @@ export default class AdminMenu extends Component {
         }
       })
       .then((response) => {
-        console.log(response)
         if (response.ok) {
-          return response.json()
+          return response
         }
         throw new Error('Network response was not ok.')
       })
@@ -225,6 +289,31 @@ export default class AdminMenu extends Component {
       })
   }
 
+  removeMenuItem(item) {
+    fetch(`http://${process.env.HOST}/menu/${item._id}`, {
+        credentials: "same-origin",
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `JWT ${this.state.jwt}`
+        }
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response
+        }
+        throw new Error('Network response was not ok.')
+      })
+      .then((response) => {
+        console.log(response)
+        //cb(response)
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log('There has been a problem with your fetch operation1: ' + error.message)
+      })
+  }
 
 }
 

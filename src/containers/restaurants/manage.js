@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateRestaurant} from '../../actions/index'
+
 import {bindActionCreators} from 'redux'
 import filter from 'lodash.filter'
 import EditRestaurant from './edit'
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateRestaurant: updateRestaurant
+    
   }, dispatch)
 }
 

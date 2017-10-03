@@ -10,9 +10,10 @@ export const getSelRestaurant = createSelector([
 ], (selectedRestaurant, selectedMenu, availableRestaurants) => {
 
   let retValue = null
-  if (!selectedRestaurant && !selectedMenu || availableRestaurants.length === 0)
+  if (!selectedRestaurant && !selectedMenu && availableRestaurants.length === 0)
     retValue = null
-
+  else  if (!selectedRestaurant && !selectedMenu && availableRestaurants.length > 0)
+   retValue = availableRestaurants[0]
   else {
     if (selectedRestaurant && _filter(availableRestaurants, {_id: selectedRestaurant._id}).length === 1)
       retValue = selectedRestaurant

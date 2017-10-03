@@ -20,4 +20,12 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
     .catch(next)
 })
 
+router.post('/add', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+  db
+    .addRestaurant(req.body)
+    .then(() => db.getRestaurants())
+    .then(res.json.bind(res))
+    .catch(next)
+})
+
 module.exports = router

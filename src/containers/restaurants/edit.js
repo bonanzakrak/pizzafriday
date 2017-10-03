@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateRestaurant} from '../../actions/index'
+import {updateRestaurant,addRestaurant} from '../../actions/index'
 import {bindActionCreators} from 'redux'
 import {Router, Route, Link, IndexRoute} from 'react-router'
 class EditRestaurant extends Component {
@@ -40,7 +40,6 @@ class EditRestaurant extends Component {
         .submit
         .bind(this, this.props.restaurant)}>
 
-
         {this.renderField("Restaurant name","title",this.props.restaurant.id, this.props.restaurant.title )}
 
         {this.renderField("Restaurant website","website",this.props.restaurant.id, this.props.restaurant.website )}
@@ -56,12 +55,12 @@ class EditRestaurant extends Component {
   renderList() {
     return (
       <div className="row">
-        <div className="col-md-6"><Link to={"/admin/menu/" + this.props.restaurant._id}>{this.props.restaurant.title}</Link></div>
+        <div className="col-md-6">{this.props.restaurant.title}</div>
         <div className="col-md-3">
           <a className="btn btn-primary btn-sm" onClick={() => this.setState({editing: true})}>Edit</a>
         </div>
         <div className="col-md-3">
-          <a className="btn btn-info btn-sm">Show Menu</a>
+          <Link className="btn btn-info btn-sm" to={"/admin/menu/" + this.props.restaurant._id}>Show Menu</Link>
         </div>
       </div>
     )
@@ -84,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateRestaurant: updateRestaurant
+    updateRestaurant: updateRestaurant,
+    addRestaurant: addRestaurant
   }, dispatch)
 }
 

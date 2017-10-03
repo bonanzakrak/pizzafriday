@@ -4,7 +4,7 @@ import Nav from '../nav'
 
 import ManageRestaurants from '../../containers/restaurants/manage'
 import ActiveRestaurants from '../../containers/restaurants/active'
-
+import AddRestaurants from '../../containers/restaurants/add'
 class AdminRestaurants extends Component {
   render() {
     return (
@@ -12,6 +12,7 @@ class AdminRestaurants extends Component {
       <div>
         <ActiveRestaurants/>
         <ManageRestaurants/>
+        <AddRestaurants/>
       </div>
 
     )

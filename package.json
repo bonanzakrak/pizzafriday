@@ -81,6 +81,8 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "passport-oauth2": "^1.4.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-bootstrap-modal": "^3.0.1",
+    "react-modal": "^2.3.2"
   }
 }

@@ -41,8 +41,6 @@ router.post('/order', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
   async.each(req.body, function (item, callback) {
-    console.log(item._id, item.idx)
-
     req
       .db
       .Menu
@@ -56,11 +54,9 @@ router.post('/order', passport.authenticate('jwt', {
         upsert: false
       })
       .then(function (data) {
-        console.log(data)
         callback(null, data)
       })
       .catch(function (error) {
-        console.log(error)
         callback(error, null)
       })
   }, function done() {
@@ -113,5 +109,56 @@ router.delete('/:id', passport.authenticate('jwt', {
       .catch(next)
   }
 })
+
+router.post('/new/:id'
+  /*, passport.authenticate('jwt', {
+    session: false
+  })*/
+  , (req, res, next) => {
+    console.log(req.params, req.body)
+    if (!req.db.mongoose.Types.ObjectId.isValid(req.params.id))
+      return next(new Error('id is not valid ObjectId'))
+    else {
+      const getId = (result) => {
+        let maxId = 1;
+        if (result.length === 1)
+          maxId = result[0].idx+1;
+
+        return maxId
+      }
+
+      req
+        .db
+        .Menu
+        .find({
+          restaurant: req.params.id
+        })
+        .sort({
+          idx: -1
+        })
+        .limit(1)
+        .exec()
+        .then(getId)
+        .then((maxId) => req
+          .db
+          .Menu
+          .create({
+            name: req.body.name,
+            altName: req.body.altName,
+            price: req.body.price,
+            restaurant: req.params.id,
+            idx: maxId
+          }, {
+            upsert: true,
+            new: true
+          }))
+        .then(res.json.bind(res))
+        .catch(next)
+
+
+      /**/
+    }
+  })
+
 
 module.exports = router

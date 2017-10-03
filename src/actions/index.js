@@ -41,6 +41,23 @@ const updateRestaurant = (restaurant, save = true) => {
     }
 }
 
+const addRestaurant = (restaurant) => {
+  const action = {
+    type: 'ADD_RESTAURANT',
+    payload: restaurant,
+    apiEndpoint: '/restaurant/add'
+  }
+
+  return function (dispatch, getState) {
+    return api.saveSelection(action, (restaurant) => {
+      // get data from response (new id's)
+      action.payload = restaurant
+      dispatch(action)
+      dispatch(getNotification('Zapisano restauracje'))
+    })
+  }
+}
+
 const selectMenu = (menu, save = true) => {
   const action = {
     type: 'SELECT_MENU',
@@ -58,7 +75,6 @@ const selectMenu = (menu, save = true) => {
         })
       }
     }
-
 }
 
 const selectAddon = (addon, save = true) => {
@@ -165,6 +181,7 @@ export {
   setAvailableRestaurants,
   removeAddon,
   updateRestaurant,
+  addRestaurant,
   setGroupedOrders,
   setOrders,
   setMenu,

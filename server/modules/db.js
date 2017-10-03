@@ -8,7 +8,11 @@ module.exports = {
       .User
       .findOneAndUpdate({
         id: user.id
-      }, {$set:user}, {upsert: true})
+      }, {
+        $set: user
+      }, {
+        upsert: true
+      })
       .then((result) => {
         return cb(null, user.id)
       })
@@ -20,7 +24,9 @@ module.exports = {
     //this is from passport - required CB
     models
       .User
-      .find({id: payload.id})
+      .find({
+        id: payload.id
+      })
       .then((result) => {
         if (result.length === 1)
           return cb(null, result[0])
@@ -33,42 +39,42 @@ module.exports = {
     let update
 
     switch (action.type) {
-      case('SELECT_MENU'):
-        {
-          update = {
-            $set: {
-              menu: action.payload
-            }
+    case ('SELECT_MENU'):
+      {
+        update = {
+          $set: {
+            menu: action.payload
           }
-          break
         }
-      case('SELECT_ADDON'):
-        {
-          update = {
-            $set: {
-              addon: action.payload
-            }
+        break
+      }
+    case ('SELECT_ADDON'):
+      {
+        update = {
+          $set: {
+            addon: action.payload
           }
-          break
         }
-      case('ADD_COMMENT'):
-        {
-          update = {
-            $set: {
-              comment: action.payload
-            }
+        break
+      }
+    case ('ADD_COMMENT'):
+      {
+        update = {
+          $set: {
+            comment: action.payload
           }
-          break
         }
-      case('REMOVE_ADDON'):
-        {
-          update = {
-            $unset: {
-              addon: true
-            }
+        break
+      }
+    case ('REMOVE_ADDON'):
+      {
+        update = {
+          $unset: {
+            addon: true
           }
-          break
         }
+        break
+      }
     }
 
     return models
@@ -78,7 +84,9 @@ module.exports = {
         date: moment()
           .startOf('day')
           .toDate()
-      }, update, {upsert: true})
+      }, update, {
+        upsert: true
+      })
   },
   getUserOrders: (user, scope) => {
     if (scope.authenticated) {
@@ -118,7 +126,9 @@ module.exports = {
         $set: {
           restaurants
         }
-      }, {upsert: true})
+      }, {
+        upsert: true
+      })
   },
   getActiveRestaurants: () => {
     return models
@@ -138,7 +148,19 @@ module.exports = {
           title: restaurant.title,
           website: restaurant.website
         }
-      }, {upsert: true})
+      }, {
+        upsert: true
+      })
+  },
+  addRestaurant: (data) => {
+    const restaurant = data.payload
+
+    return models
+      .Restaurant
+      .create({
+          title: restaurant.title,
+          website: restaurant.website
+      })
   },
   getRestaurants: () => {
     return models
