@@ -90,7 +90,7 @@ class List extends Component {
   }
 
   getList(restaurant) {
-    console.log('GET LIST')
+
     fetch('http://' + process.env.HOST + this.endpoint + restaurant, {
       credentials: "same-origin",
       headers: {
